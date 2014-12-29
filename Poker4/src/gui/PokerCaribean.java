@@ -23,7 +23,7 @@ public class PokerCaribean extends javax.swing.JFrame {
     private final JPanelConFondo cartasBanca[];
     private final JPanelConFondo cartasUsuario[];
     private final JPanelConFondo cartasComunes[];
-    private int miDinero, dineroApuesta;
+    private int dineroApuesta;
     private Baraja baraja;
     private Jugador jugador, banca;
     private Carta[] cartasB, cartasJ, aux, board;
@@ -48,7 +48,6 @@ public class PokerCaribean extends javax.swing.JFrame {
         cartasJ = new Carta[7];
         board = new Carta[5];
         baraja = Baraja.getInstance();
-        miDinero = 1000;
         va = new ValorMano();
         parser = new ParserJugada();
         
@@ -87,7 +86,7 @@ public class PokerCaribean extends javax.swing.JFrame {
         cartasComunes[4].setBounds(x+(ancho*4), y, ancho, alto);
         this.add(cartasComunes[4]);
         
-        tfMiStack.setText(Integer.toString(miDinero));
+        tfMiStack.setText(Integer.toString(jugador.getDinero()));
         this.tfMiStack.setEditable(false);
     }
 
@@ -182,14 +181,14 @@ public class PokerCaribean extends javax.swing.JFrame {
 
     private void btApostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btApostarActionPerformed
         if(btApostar.getText().equalsIgnoreCase("Empezar")){
-            if(miDinero <= 5){
+            if(jugador.getDinero() <= 5){
                 JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
                    "Por favor, algo de dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else{
                     resetearCartas();
                     tfResultado.setText("");
-                    miDinero--;
+                    jugador.sacarCredito(1);
                     dineroApuesta ++;
                     
                     //banca
@@ -209,11 +208,11 @@ public class PokerCaribean extends javax.swing.JFrame {
                     
                     btApostar.setText("Flop");
                     tfDineroApostado.setText(Integer.toString(dineroApuesta));
-                    tfMiStack.setText(Integer.toString(miDinero));
+                    tfMiStack.setText(Integer.toString(jugador.getDinero()));
                 }   
         }
         else if(btApostar.getText().equalsIgnoreCase("Flop")){
-            miDinero-=2;
+            jugador.sacarCredito(2);
             dineroApuesta+=2;
             //generar tres cartas aleatorias para flop
             aux = baraja.generaCartasConString(baraja.getJugadaString(3));
@@ -223,10 +222,10 @@ public class PokerCaribean extends javax.swing.JFrame {
             }            
             btApostar.setText("Turn");
             tfDineroApostado.setText(Integer.toString(dineroApuesta));
-            tfMiStack.setText(Integer.toString(miDinero));
+            tfMiStack.setText(Integer.toString(jugador.getDinero()));
         }
         else if(btApostar.getText().equalsIgnoreCase("Turn")){
-            miDinero--;
+            jugador.sacarCredito(1);
             dineroApuesta++;
             //generar carta aleatoria para turn
             aux = baraja.generaCartasConString(baraja.getJugadaString(1));
@@ -235,13 +234,13 @@ public class PokerCaribean extends javax.swing.JFrame {
             
             btApostar.setText("River");
             tfDineroApostado.setText(Integer.toString(dineroApuesta));
-            tfMiStack.setText(Integer.toString(miDinero));
+            tfMiStack.setText(Integer.toString(jugador.getDinero()));
         }
         else if(btApostar.getText().equalsIgnoreCase("River")){
-            miDinero--;
+            jugador.sacarCredito(1);
             dineroApuesta++;
             tfDineroApostado.setText(Integer.toString(dineroApuesta));
-            tfMiStack.setText(Integer.toString(miDinero));
+            tfMiStack.setText(Integer.toString(jugador.getDinero()));
             //generar carta aleatoria para river
             aux = baraja.generaCartasConString(baraja.getJugadaString(1));
             board[4] = aux[0];
@@ -258,12 +257,12 @@ public class PokerCaribean extends javax.swing.JFrame {
             resultadoB = va.valorarMiMano(cartasB);
             ganador = ganador(resultadoJ, resultadoB);
             if(ganador == 0){//empate
-                miDinero += dineroApuesta;
+                jugador.aniadirCredito(dineroApuesta);
                 tfResultado.setText("EMPATE");
                 tfResultado.setForeground(Color.YELLOW);
             }
             else if(ganador == 1){//gana jugador
-                miDinero += (dineroApuesta*2);
+                jugador.aniadirCredito(dineroApuesta*2);
                 tfResultado.setText("GANAS");
                 tfResultado.setForeground(Color.GREEN);                
             }
@@ -277,7 +276,7 @@ public class PokerCaribean extends javax.swing.JFrame {
             
             btApostar.setText("Empezar");
             tfDineroApostado.setText(Integer.toString(dineroApuesta));
-            tfMiStack.setText(Integer.toString(miDinero));
+            tfMiStack.setText(Integer.toString(jugador.getDinero()));
         }
     }//GEN-LAST:event_btApostarActionPerformed
 

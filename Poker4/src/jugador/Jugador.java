@@ -19,7 +19,7 @@ public class Jugador {
     /*Constructor de Jugador. Inicializa el dinero que posee el jugador
     actual a 0*/
     public Jugador(int dinero){        
-        this.dinero = 0;       
+        this.dinero = dinero;       
     }
     
     /*Getters y Setters de la clase*/
@@ -44,13 +44,13 @@ public class Jugador {
     }
     
     /*Añade el dinero introducido al total del jugador actual*/
-    public void aniadirCredto(int credito){
+    public void aniadirCredito(int credito){
         this.dinero += credito;
     }
     
     /*Permite sacar el dinero deseado siempre y cuando el total
     sea mayor o igual*/
-    public void sacarCredto(int credito){
+    public void sacarCredito(int credito){
         if(this.dinero >= credito)
             this.dinero -= credito;
         else
