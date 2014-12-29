@@ -5,7 +5,7 @@
  */
 package main;
 
-import gui.pokerCaribean;
+import gui.PokerCaribean;
 
 /**
  *
@@ -18,7 +18,7 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        new pokerCaribean().setVisible(true);
+        new PokerCaribean().setVisible(true);
     }
     
 }
