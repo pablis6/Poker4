@@ -20,6 +20,7 @@ public class pokerCaribean extends javax.swing.JFrame {
     private int miDinero;
     private int dineroApuesta;
     private Baraja baraja;
+    
     /**
      * Creates new form pokerCaribean
      */
