@@ -132,8 +132,11 @@ public class PokerCaribean extends javax.swing.JFrame {
             }
         });
 
+        tfDineroApostado.setEditable(false);
+
         lblApuestas.setText("Apuestas");
 
+        tfMiStack.setEditable(false);
         tfMiStack.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         lblStack.setText("Tu stack");
@@ -149,9 +152,15 @@ public class PokerCaribean extends javax.swing.JFrame {
         tfResultado.setFont(new java.awt.Font("Cantarell", 1, 36)); // NOI18N
         tfResultado.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
+        tfGanados.setEditable(false);
+
         lblGanado.setText("Ganadas");
 
+        tfPerdidos.setEditable(false);
+
         lblPerdido.setText("Perdidas");
+
+        tfEmpatadas.setEditable(false);
 
         lblEmpatado.setText("Empatadas");
 
@@ -159,6 +168,15 @@ public class PokerCaribean extends javax.swing.JFrame {
         jMenuBar1.add(jmSalir);
 
         jmRecargarSaldo.setText("Añadir dinero");
+        jmRecargarSaldo.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jmRecargarSaldoMenuSelected(evt);
+            }
+        });
         jMenuBar1.add(jmRecargarSaldo);
 
         setJMenuBar(jMenuBar1);
@@ -342,6 +360,15 @@ public class PokerCaribean extends javax.swing.JFrame {
         resetearCartas();
     }//GEN-LAST:event_btRetirarseActionPerformed
 
+    private void jmRecargarSaldoMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jmRecargarSaldoMenuSelected
+        // TODO add your handling code here:
+        new VentanaDinero(this.jugador, this).setVisible(true);
+    }//GEN-LAST:event_jmRecargarSaldoMenuSelected
+
+    public void setDinero(){
+        tfMiStack.setText(Integer.toString(this.jugador.getDinero()));
+    }
+    
     private int ganador(String[] resultadoJ, String[] resultadoB) { //0 empate, 1 jugador, 2 banca
         jugadaJ = parser.getJugada(resultadoJ);
         jugadaB = parser.getJugada(resultadoB);
