@@ -14,12 +14,15 @@ import carta.Carta;
 public class Jugador {
     
     private Carta carta1, carta2;
-    private int dinero;
+    private int dinero, vecesGanadas, vecesPerdidas, vecesEmpatadas;
     
     /*Constructor de Jugador. Inicializa el dinero que posee el jugador
     actual a 0*/
     public Jugador(int dinero){        
-        this.dinero = dinero;       
+        this.dinero = dinero;
+        this.vecesGanadas = 0;
+        this.vecesPerdidas = 0;
+        this.vecesEmpatadas = 0;
     }
     
     /*Getters y Setters de la clase*/
@@ -55,5 +58,29 @@ public class Jugador {
             this.dinero -= credito;
         else
             System.out.println("El credito es insuficiente");
+    }
+    
+    public void sumaGanado(){
+        vecesGanadas++;
+    }
+    
+    public int getGanado(){
+        return vecesGanadas;
+    }
+    
+    public void sumaPerdido(){
+        vecesPerdidas++;
+    }
+    
+    public int getPerdido(){
+        return vecesPerdidas;
+    }
+    
+    public void sumaEmpatado(){
+        vecesEmpatadas++;
+    }
+    
+    public int getEmpatado(){
+        return vecesEmpatadas;
     }
 }

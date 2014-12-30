@@ -86,8 +86,11 @@ public class PokerCaribean extends javax.swing.JFrame {
         cartasComunes[4].setBounds(x+(ancho*4), y, ancho, alto);
         this.add(cartasComunes[4]);
         
-        tfMiStack.setText(Integer.toString(jugador.getDinero()));
+        this.tfMiStack.setText(Integer.toString(jugador.getDinero()));
         this.tfMiStack.setEditable(false);
+        this.tfGanados.setText(Integer.toString(jugador.getGanado()));
+        this.tfPerdidos.setText(Integer.toString(jugador.getPerdido()));
+        this.tfEmpatadas.setText(Integer.toString(jugador.getEmpatado()));
     }
 
     /**
@@ -102,9 +105,17 @@ public class PokerCaribean extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         btApostar = new javax.swing.JButton();
         tfDineroApostado = new javax.swing.JTextField();
+        lblApuestas = new javax.swing.JLabel();
         tfMiStack = new javax.swing.JTextField();
+        lblStack = new javax.swing.JLabel();
         btRetirarse = new javax.swing.JButton();
         tfResultado = new javax.swing.JTextField();
+        tfGanados = new javax.swing.JTextField();
+        lblGanado = new javax.swing.JLabel();
+        tfPerdidos = new javax.swing.JTextField();
+        lblPerdido = new javax.swing.JLabel();
+        tfEmpatadas = new javax.swing.JTextField();
+        lblEmpatado = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmSalir = new javax.swing.JMenu();
         jmRecargarSaldo = new javax.swing.JMenu();
@@ -121,7 +132,11 @@ public class PokerCaribean extends javax.swing.JFrame {
             }
         });
 
+        lblApuestas.setText("Apuestas");
+
         tfMiStack.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        lblStack.setText("Tu stack");
 
         btRetirarse.setText("Retirarse");
         btRetirarse.addActionListener(new java.awt.event.ActionListener() {
@@ -133,6 +148,12 @@ public class PokerCaribean extends javax.swing.JFrame {
         tfResultado.setEditable(false);
         tfResultado.setFont(new java.awt.Font("Cantarell", 1, 36)); // NOI18N
         tfResultado.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        lblGanado.setText("Ganadas");
+
+        lblPerdido.setText("Perdidas");
+
+        lblEmpatado.setText("Empatadas");
 
         jmSalir.setText("Salir");
         jMenuBar1.add(jmSalir);
@@ -147,32 +168,58 @@ public class PokerCaribean extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(431, Short.MAX_VALUE)
+                .addContainerGap(429, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblEmpatado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblApuestas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblGanado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblPerdido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblStack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btRetirarse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btApostar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tfDineroApostado)
-                            .addComponent(tfMiStack))
-                        .addGap(49, 49, 49))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                            .addComponent(tfMiStack)
+                            .addComponent(tfGanados)
+                            .addComponent(tfPerdidos)
+                            .addComponent(tfEmpatadas))
+                        .addGap(49, 49, 49))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
-                .addComponent(tfDineroApostado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEmpatado)
+                    .addComponent(tfEmpatadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfPerdidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPerdido))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfGanados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblGanado))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfDineroApostado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblApuestas))
                 .addGap(18, 18, 18)
                 .addComponent(btApostar)
                 .addGap(18, 18, 18)
                 .addComponent(btRetirarse)
                 .addGap(18, 18, 18)
-                .addComponent(tfMiStack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfMiStack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblStack))
                 .addGap(37, 37, 37))
         );
 
@@ -260,15 +307,21 @@ public class PokerCaribean extends javax.swing.JFrame {
                 jugador.aniadirCredito(dineroApuesta);
                 tfResultado.setText("EMPATE");
                 tfResultado.setForeground(Color.YELLOW);
+                jugador.sumaEmpatado();
+                tfEmpatadas.setText(Integer.toString(jugador.getEmpatado()));
             }
             else if(ganador == 1){//gana jugador
                 jugador.aniadirCredito(dineroApuesta*2);
                 tfResultado.setText("GANAS");
-                tfResultado.setForeground(Color.GREEN);                
+                tfResultado.setForeground(Color.GREEN);
+                jugador.sumaGanado();
+                tfGanados.setText(Integer.toString(jugador.getGanado()));
             }
             else {
                 tfResultado.setText("PIERDES");
                 tfResultado.setForeground(Color.RED);
+                jugador.sumaPerdido();
+                tfPerdidos.setText(Integer.toString(jugador.getPerdido()));
             }//gana banca
 
             //reiniciar el contador de dineroApuesta
@@ -394,8 +447,16 @@ public class PokerCaribean extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jmRecargarSaldo;
     private javax.swing.JMenu jmSalir;
+    private javax.swing.JLabel lblApuestas;
+    private javax.swing.JLabel lblEmpatado;
+    private javax.swing.JLabel lblGanado;
+    private javax.swing.JLabel lblPerdido;
+    private javax.swing.JLabel lblStack;
     private javax.swing.JTextField tfDineroApostado;
+    private javax.swing.JTextField tfEmpatadas;
+    private javax.swing.JTextField tfGanados;
     private javax.swing.JTextField tfMiStack;
+    private javax.swing.JTextField tfPerdidos;
     private javax.swing.JTextField tfResultado;
     // End of variables declaration//GEN-END:variables
 

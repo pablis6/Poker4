@@ -53,20 +53,31 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace pref="431" max="32767" attributes="0"/>
+              <EmptySpace pref="429" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
+                      <Component id="tfResultado" min="-2" pref="190" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="lblEmpatado" max="32767" attributes="0"/>
+                          <Component id="lblApuestas" max="32767" attributes="0"/>
+                          <Component id="lblGanado" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblPerdido" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblStack" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btRetirarse" max="32767" attributes="0"/>
                           <Component id="btApostar" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfDineroApostado" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfMiStack" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfGanados" max="32767" attributes="0"/>
+                          <Component id="tfPerdidos" max="32767" attributes="0"/>
+                          <Component id="tfEmpatadas" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="tfResultado" min="-2" pref="190" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -77,14 +88,35 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Component id="tfResultado" min="-2" pref="40" max="-2" attributes="0"/>
-              <EmptySpace pref="165" max="32767" attributes="0"/>
-              <Component id="tfDineroApostado" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="33" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblEmpatado" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfEmpatadas" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="tfPerdidos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPerdido" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="tfGanados" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblGanado" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="tfDineroApostado" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblApuestas" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btApostar" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btRetirarse" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="tfMiStack" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="tfMiStack" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblStack" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -101,9 +133,19 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfDineroApostado">
     </Component>
+    <Component class="javax.swing.JLabel" name="lblApuestas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Apuestas"/>
+      </Properties>
+    </Component>
     <Component class="javax.swing.JTextField" name="tfMiStack">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblStack">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tu stack"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btRetirarse">
@@ -125,6 +167,27 @@
             <EmptyBorder/>
           </Border>
         </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfGanados">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblGanado">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ganadas"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfPerdidos">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPerdido">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Perdidas"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfEmpatadas">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEmpatado">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Empatadas"/>
       </Properties>
     </Component>
   </SubComponents>
