@@ -5,6 +5,7 @@
  */
 package gui;
 
+import java.awt.Insets;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import jugador.Jugador;
@@ -27,7 +28,9 @@ public class VentanaDinero extends javax.swing.JFrame {
         
         initComponents();
         
+        this.jButton1.setMargin(new Insets(1, 1, 1, 1));
         this.setAlwaysOnTop(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); 
     }
 
     /**
