@@ -396,6 +396,10 @@ public class PokerCaribean extends javax.swing.JFrame {
                 jugador.aniadirCredito(dineroApuesta);
                 tfResultado.setText("EMPATE");
                 tfResultado.setForeground(Color.YELLOW);
+                jLabel6.setText(Integer.toString(dineroApuesta));
+                jLabel5.setVisible(true);
+                jLabel6.setVisible(true);
+                jLabel7.setVisible(true);
                 jugador.sumaEmpatado();
                 tfEmpatadas.setText(Integer.toString(jugador.getEmpatado()));
             }
@@ -420,6 +424,10 @@ public class PokerCaribean extends javax.swing.JFrame {
             else {
                 tfResultado.setText("PIERDES");
                 tfResultado.setForeground(Color.RED);
+                jLabel6.setText(Integer.toString(0));
+                jLabel5.setVisible(true);
+                jLabel6.setVisible(true);
+                jLabel7.setVisible(true);
                 jugador.sumaPerdido();
                 tfPerdidos.setText(Integer.toString(jugador.getPerdido()));
             }//gana banca
