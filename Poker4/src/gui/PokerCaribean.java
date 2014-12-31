@@ -124,6 +124,9 @@ public class PokerCaribean extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmSalir = new javax.swing.JMenu();
         jmRecargarSaldo = new javax.swing.JMenu();
@@ -178,6 +181,15 @@ public class PokerCaribean extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Jugador:");
 
+        jLabel5.setText("Ganas");
+        jLabel5.setVisible(false);
+
+        jLabel6.setText("         ");
+        jLabel6.setVisible(false);
+
+        jLabel7.setText("euros");
+        jLabel7.setVisible(false);
+
         jmSalir.setText("Salir");
         jMenuBar1.add(jmSalir);
 
@@ -211,6 +223,9 @@ public class PokerCaribean extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(lblEmpatado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblApuestas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -228,8 +243,12 @@ public class PokerCaribean extends javax.swing.JFrame {
                             .addComponent(tfEmpatadas))
                         .addGap(49, 49, 49))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addGap(93, 93, 93))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +259,12 @@ public class PokerCaribean extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmpatado)
                     .addComponent(tfEmpatadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -277,6 +301,10 @@ public class PokerCaribean extends javax.swing.JFrame {
             
             jLabel1.setText("");
             jLabel2.setText("");
+            jLabel5.setVisible(false);
+            jLabel6.setVisible(false);
+            jLabel6.setText("");
+            jLabel7.setVisible(false);
             
             if(jugador.getDinero() <= 5){
                 JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
@@ -366,13 +394,20 @@ public class PokerCaribean extends javax.swing.JFrame {
                 tfEmpatadas.setText(Integer.toString(jugador.getEmpatado()));
             }
             else if(ganador == 1){//gana jugador
-                if(this.menorTrio == false)
+                if(this.menorTrio == false){
                     jugador.aniadirCredito(dineroApuesta*2);
-                else
+                    jLabel6.setText(Integer.toString(dineroApuesta*2));
+                }
+                else{
                     jugador.aniadirCredito((dineroApuesta*2)-1);
-                
+                    jLabel6.setText(Integer.toString((dineroApuesta*2)-1));
+                }
+                    
                 tfResultado.setText("GANAS");
                 tfResultado.setForeground(Color.GREEN);
+                jLabel5.setVisible(true);
+                jLabel6.setVisible(true);
+                jLabel7.setVisible(true);
                 jugador.sumaGanado();
                 tfGanados.setText(Integer.toString(jugador.getGanado()));
             }
@@ -397,6 +432,10 @@ public class PokerCaribean extends javax.swing.JFrame {
         
         jLabel1.setText("");
         jLabel2.setText("");
+        jLabel5.setVisible(false);
+        jLabel6.setVisible(false);
+        jLabel6.setText("");
+        jLabel7.setVisible(false);
         
         btApostar.setText("Empezar");
         dineroApuesta = 0;
@@ -527,6 +566,9 @@ public class PokerCaribean extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jmRecargarSaldo;
