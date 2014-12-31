@@ -383,6 +383,12 @@ public class PokerCaribean extends javax.swing.JFrame {
             resultadoB = va.valorarMiMano(cartasB);
             ganador = ganador(resultadoJ, resultadoB);
             
+            if(jugadaJ.equalsIgnoreCase(cons.TWO_PAIR) || jugadaJ.equalsIgnoreCase(cons.PAIR) || jugadaJ.equalsIgnoreCase(cons.HIGH_CARD)){
+                this.menorTrio = true;
+            }
+            else
+                this.menorTrio = false;
+            
             jLabel1.setText(this.jugadaJ);
             jLabel2.setText(this.jugadaB);
             
@@ -501,12 +507,7 @@ public class PokerCaribean extends javax.swing.JFrame {
         
         else if(cons.tablaValoresMano.get(jugadaJ) > cons.tablaValoresMano.get(jugadaB)){
             //mejor jugada de jugador
-            if(jugadaJ.equalsIgnoreCase(cons.TWO_PAIR) || jugadaJ.equalsIgnoreCase(cons.PAIR)
-                    || jugadaJ.equalsIgnoreCase(cons.HIGH_CARD)){
-                this.menorTrio = true;
-            }
-            else
-                this.menorTrio = false;
+            
             return 1;
         }
         else return 2; // por descarte la mejor jugada es de la banca
