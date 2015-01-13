@@ -44,6 +44,10 @@ public class AntiguasConstantes {
    public static final int KING  = 11;
    public static final int ACE  = 12;
    
+   public static final int BANCA = 2;
+   public static final int JUGADOR = 1;
+   public static final int EMPATE = 0;
+   
    
    //jugadas
    public static final String STRAIGHT_FLUSH = "Straight flush";
@@ -129,7 +133,7 @@ public class AntiguasConstantes {
        tablaValoresMano.put(FOUR_OF_A_KIND, 7);
        tablaValoresMano.put(STRAIGHT_FLUSH, 8);
        
-       tablaManoValores.put(0,HIGH_CARD);
+       tablaManoValores.put(HIGH_CARD_INT,HIGH_CARD);
        tablaManoValores.put(1,PAIR);
        tablaManoValores.put(2,TWO_PAIR);
        tablaManoValores.put(3,THREE_OF_A_KIND);

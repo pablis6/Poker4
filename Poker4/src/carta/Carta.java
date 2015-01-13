@@ -49,7 +49,8 @@ public class Carta
         }
         else
         {
-            valor = Integer.parseInt(digito)-1;
+            
+            valor = Integer.parseInt(digito)-2;
         }
         disponible = true;
     }
