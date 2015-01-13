@@ -7,11 +7,14 @@ package gui;
 
 import carta.*;
 import constantes.*;
+import static constantes.AntiguasConstantes.tablaManoValores;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import jugada.Jugador;
 import jugada.ParserJugada;
 import jugada.ValorMano;
-import jugador.Jugador;
+import jugador.Player;
+import ordenacion.MergeSort;
 
 /**
  *
@@ -20,12 +23,13 @@ import jugador.Jugador;
 public class PokerCaribean extends javax.swing.JFrame {
 
     private Constantes cons;
+    private AntiguasConstantes acons;
     private final JPanelConFondo cartasBanca[];
     private final JPanelConFondo cartasUsuario[];
     private final JPanelConFondo cartasComunes[];
     private int dineroApuesta;
     private Baraja baraja;
-    private Jugador jugador, banca;
+    private Player jugador, banca;
     private Carta[] cartasB, cartasJ, aux, board;
     private ValorMano va;
     private String[] resultadoB, resultadoJ;
@@ -43,11 +47,12 @@ public class PokerCaribean extends javax.swing.JFrame {
         
         initComponents();
         cons = new Constantes();
+        acons = new AntiguasConstantes();
         cartasBanca = new JPanelConFondo[2];
         cartasUsuario = new JPanelConFondo[2];
         cartasComunes = new JPanelConFondo[5];
-        jugador = new Jugador(1000);
-        banca = new Jugador(1000);
+        jugador = new Player(0);
+        banca = new Player(1000);
         cartasB = new Carta[7];
         cartasJ = new Carta[7];
         board = new Carta[5];
@@ -306,9 +311,9 @@ public class PokerCaribean extends javax.swing.JFrame {
             jLabel6.setText("");
             jLabel7.setVisible(false);
             
-            if(jugador.getDinero() <= 5){
+            if(jugador.getDinero() < 5){
                 JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
-                   "Por favor, algo de dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
+                   "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else{
                     resetearCartas();
@@ -317,13 +322,13 @@ public class PokerCaribean extends javax.swing.JFrame {
                     dineroApuesta ++;
                     
                     //banca
-                    aux = baraja.generaCartasConString(baraja.getJugadaString(2));
+                    aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(2)));
                     cartasB[0] = aux[0];
                     cartasB[1] = aux[1];
                     banca.setCarta1(cartasB[0]);
                     banca.setCarta2(cartasB[1]);
                    //jugador
-                    aux = baraja.generaCartasConString(baraja.getJugadaString(2));
+                    aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(2)));
                     cartasJ[0] = aux[0];
                     cartasJ[1] = aux[1];
                     jugador.setCarta1(cartasJ[0]);
@@ -340,7 +345,7 @@ public class PokerCaribean extends javax.swing.JFrame {
             jugador.sacarCredito(2);
             dineroApuesta+=2;
             //generar tres cartas aleatorias para flop
-            aux = baraja.generaCartasConString(baraja.getJugadaString(3));
+            aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(3)));
             for(int i = 0; i < 3; i++){
                 board[i] = aux[i];
                 cartasComunes[i].setImagen("/resources/" + board[i].getDenominacion()+ ".png");
@@ -353,7 +358,7 @@ public class PokerCaribean extends javax.swing.JFrame {
             jugador.sacarCredito(1);
             dineroApuesta++;
             //generar carta aleatoria para turn
-            aux = baraja.generaCartasConString(baraja.getJugadaString(1));
+            aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(1)));
             board[3] = aux[0];
             cartasComunes[3].setImagen("/resources/" + board[3].getDenominacion()+ ".png");
             
@@ -368,7 +373,7 @@ public class PokerCaribean extends javax.swing.JFrame {
             tfDineroApostado.setText(Integer.toString(dineroApuesta));
             tfMiStack.setText(Integer.toString(jugador.getDinero()));
             //generar carta aleatoria para river
-            aux = baraja.generaCartasConString(baraja.getJugadaString(1));
+            aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(1)));
             board[4] = aux[0];
             cartasComunes[4].setImagen("/resources/" + board[4].getDenominacion()+ ".png");
             //mostrar cartas banca
@@ -379,18 +384,53 @@ public class PokerCaribean extends javax.swing.JFrame {
                 cartasB[i+2] = board[i];
                 cartasJ[i+2] = board[i];
             }
+            /*
             resultadoJ = va.valorarMiMano(cartasJ);
             resultadoB = va.valorarMiMano(cartasB);
             ganador = ganador(resultadoJ, resultadoB);
-            
-            if(jugadaJ.equalsIgnoreCase(cons.TWO_PAIR) || jugadaJ.equalsIgnoreCase(cons.PAIR) || jugadaJ.equalsIgnoreCase(cons.HIGH_CARD)){
-                this.menorTrio = true;
+            */
+            MergeSort merge = new MergeSort(2);
+             merge.iniciaEmpatados();
+             
+             Jugador[] jugadoresConCartas = new Jugador[2];
+             jugadoresConCartas[0] = new Jugador(cartasJ,0);
+             jugadoresConCartas[0].setJugada(va.valorarMiMano(cartasJ));
+             va = new ValorMano();
+             jugadoresConCartas[1] = new Jugador(cartasB,1);
+             jugadoresConCartas[1].setJugada(va.valorarMiMano(cartasB));
+             
+             
+             Jugador jugOrdenados []= merge.mergeSort(jugadoresConCartas);
+             //Jugador jugOrdenados []= merge.mergeSort(jugConCartas);
+            int tamEmpatados =  merge.dameEmpatados().size();
+            //System.out.println(jugOrdenados[jugOrdenados.length-1].getJugada()[0]);
+            if(merge.estaJugadorEmpatadoEnLaLista(jugOrdenados[jugOrdenados.length-1].getId())){
+
+                ganador=0;
+                jLabel1.setText(acons.tablaManoValores.get(jugOrdenados[1].getJugada()[0]));
+                jLabel2.setText(acons.tablaManoValores.get(jugOrdenados[0].getJugada()[0]));
             }
-            else
-                this.menorTrio = false;
+            else{
+                if (jugOrdenados[1].getId() == 2)//gana la banca
+                {
+                    ganador = 2;
+                    jLabel1.setText(acons.tablaManoValores.get(jugOrdenados[0].getJugada()[0]));
+                    jLabel2.setText(acons.tablaManoValores.get(jugOrdenados[1].getJugada()[0]));
+                }
+                else if (jugOrdenados[1].getId() == 1){//gana el jugador
+                    ganador = 1;
+                    if(jugOrdenados[1].getJugada()[0] == acons.TWO_PAIR_INT || jugOrdenados[1].getJugada()[0] == acons.PAIR_INT || jugOrdenados[1].getJugada()[0] == acons.HIGH_CARD_INT){
+                        this.menorTrio = true;
+                    }
+                    else
+                        this.menorTrio = false;
+                    jLabel1.setText(acons.tablaManoValores.get(jugOrdenados[1].getJugada()[0]));
+                    jLabel2.setText(acons.tablaManoValores.get(jugOrdenados[0].getJugada()[0]));
+                }
+                
+            }
             
-            jLabel1.setText(this.jugadaJ);
-            jLabel2.setText(this.jugadaB);
+            
             
             if(ganador == 0){//empate
                 jugador.aniadirCredito(dineroApuesta);

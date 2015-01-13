@@ -8,7 +8,7 @@ package gui;
 import java.awt.Insets;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import jugador.Jugador;
+import jugador.Player;
 
 /**
  *
@@ -16,12 +16,12 @@ import jugador.Jugador;
  */
 public class VentanaDinero extends javax.swing.JFrame {
 
-    private Jugador jugador;
+    private Player jugador;
     private PokerCaribean ventana;
     /**
      * Creates new form VentanaDinero
      */
-    public VentanaDinero(Jugador j, PokerCaribean w) {
+    public VentanaDinero(Player j, PokerCaribean w) {
         
         this.jugador = j;
         this.ventana = w;

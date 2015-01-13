@@ -7,7 +7,6 @@ package carta;
 
 import  constantes.AntiguasConstantes;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  *
@@ -17,11 +16,19 @@ public class Baraja
 {
     private static Baraja instancia;
     Carta[] baraja;
+    //Carta[] boards;
+    //String[] boardsPosibles;
+    //ArrayList<Carta[]> boardsPosibles;
    
+       AntiguasConstantes constantes;
     private Baraja()
     {
         baraja = new Carta [52];
+        //boards = new Carta[5];
         
+        //boardsPosibles = new String[1712304];
+        //boardsPosibles = new ArrayList<Carta[]>();
+       constantes = new AntiguasConstantes ();
         //spades
         baraja[0] = new Carta("ace of spades","as");
         baraja[1] = new Carta("two of spades","2s");
@@ -92,9 +99,8 @@ public class Baraja
     
    public ArrayList<String> dame2cartasDeParejaLibre(String valor)
    {
-       ArrayList<String> cartas = new ArrayList<String>();
+       ArrayList<String> cartas = new ArrayList<>();
        int cartasSinUsar = 0;
-       AntiguasConstantes constantes = new AntiguasConstantes ();
        for(int j = 0; j < 4; j++)
        {
            if(esCartaSinUsar(valor.toLowerCase()+constantes.tablaPaloString.get(j)))
@@ -117,6 +123,68 @@ public class Baraja
         {
             usarCarta(cartas.get(0));
             usarCarta(cartas.get(1));
+            
+            //ahora generamos el resto de cartas de las 6 combinaciones posibles
+            if(cartas.get(0).charAt(1) == 's' && cartas.get(1).charAt(1) == 'd' || 
+                    cartas.get(0).charAt(1) == 'd' && cartas.get(1).charAt(1) == 's')
+            {
+                //añadimos las cinco combinaciones restantes
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(0).charAt(0)+"h");
+            }
+            else if(cartas.get(0).charAt(1) == 's' && cartas.get(1).charAt(1) == 'c' || 
+                    cartas.get(0).charAt(1) == 'c' && cartas.get(1).charAt(1) == 's')
+            {
+                //añadimos las cinco combinaciones restantes
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"d");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(0).charAt(0)+"h");
+            }
+            else if(cartas.get(0).charAt(1) == 's' && cartas.get(1).charAt(1) == 'h' || 
+                    cartas.get(0).charAt(1) == 'h' && cartas.get(1).charAt(1) == 's')
+            {
+                //añadimos las cinco combinaciones restantes
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"d");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(0).charAt(0)+"h");
+            }
+            else if(cartas.get(0).charAt(1) == 'd' && cartas.get(1).charAt(1) == 'c' || 
+                    cartas.get(0).charAt(1) == 'c' && cartas.get(1).charAt(1) == 'd')
+            {
+                //añadimos las cinco combinaciones restantes
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"d");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(0).charAt(0)+"h");
+            }
+            else if(cartas.get(0).charAt(1) == 'd' && cartas.get(1).charAt(1) == 'h' || 
+                    cartas.get(0).charAt(1) == 'h' && cartas.get(1).charAt(1) == 'd')
+            {
+                //añadimos las cinco combinaciones restantes
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"d");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(0).charAt(0)+"h");
+            }
+            else if(cartas.get(0).charAt(1) == 'c' && cartas.get(1).charAt(1) == 'h' || 
+                    cartas.get(0).charAt(1) == 'h' && cartas.get(1).charAt(1) == 'c')
+            {
+                //añadimos las cinco combinaciones restantes
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"d");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"h");
+            }
             return cartas;
         }
         else
@@ -127,9 +195,8 @@ public class Baraja
    
    public ArrayList<String> dame2cartasDeParejaLibreSinUsarCarta(String valor)
    {
-       ArrayList<String> cartas = new ArrayList<String>();
+       ArrayList<String> cartas = new ArrayList<>();
        int cartasSinUsar = 0;
-       AntiguasConstantes constantes = new AntiguasConstantes ();
        for(int j = 0; j < 4; j++)
        {
            if(esCartaSinUsar(valor.toLowerCase()+constantes.tablaPaloString.get(j)))
@@ -150,6 +217,68 @@ public class Baraja
        //para no repetirlas
         if(cartasSinUsar >=2 )
         {
+            //ahora generamos el resto de cartas de las 6 combinaciones posibles
+            if(cartas.get(0).charAt(1) == 's' && cartas.get(1).charAt(1) == 'd' || 
+                    cartas.get(0).charAt(1) == 'd' && cartas.get(1).charAt(1) == 's')
+            {
+                //añadimos las cinco combinaciones restantes
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(0).charAt(0)+"h");
+            }
+            else if(cartas.get(0).charAt(1) == 's' && cartas.get(1).charAt(1) == 'c' || 
+                    cartas.get(0).charAt(1) == 'c' && cartas.get(1).charAt(1) == 's')
+            {
+                //añadimos las cinco combinaciones restantes
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"d");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(0).charAt(0)+"h");
+            }
+            else if(cartas.get(0).charAt(1) == 's' && cartas.get(1).charAt(1) == 'h' || 
+                    cartas.get(0).charAt(1) == 'h' && cartas.get(1).charAt(1) == 's')
+            {
+                
+                //añadimos las cinco combinaciones restantes
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"d");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(0).charAt(0)+"h");
+            }
+            else if(cartas.get(0).charAt(1) == 'd' && cartas.get(1).charAt(1) == 'c' || 
+                    cartas.get(0).charAt(1) == 'c' && cartas.get(1).charAt(1) == 'd')
+            {
+                //añadimos las cinco combinaciones restantes
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"d");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(0).charAt(0)+"h");
+            }
+            else if(cartas.get(0).charAt(1) == 'd' && cartas.get(1).charAt(1) == 'h' || 
+                    cartas.get(0).charAt(1) == 'h' && cartas.get(1).charAt(1) == 'd')
+            {
+                //añadimos las cinco combinaciones restantes
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"d");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(0).charAt(0)+"h");
+            }
+            else if(cartas.get(0).charAt(1) == 'c' && cartas.get(1).charAt(1) == 'h' || 
+                    cartas.get(0).charAt(1) == 'h' && cartas.get(1).charAt(1) == 'c')
+            {
+                //añadimos las cinco combinaciones restantes
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"d");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"h");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"c");
+                cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"h");
+            }
             return cartas;
         }
         else
@@ -160,9 +289,7 @@ public class Baraja
    
    public ArrayList<String> dame2cartasLibresSuited(String valor1,String valor2)
    {
-       ArrayList<String> cartas = new ArrayList<String>();
-       int cartasSinUsar = 0;
-       AntiguasConstantes constantes = new AntiguasConstantes ();
+       ArrayList<String> cartas = new ArrayList<>();
        boolean entro = false;
        for(int j = 0; j < 4; j++)
        {
@@ -173,6 +300,35 @@ public class Baraja
                  cartas.add( valor1.toLowerCase()+constantes.tablaPaloString.get(j));
               
                    cartas.add(valor2.toLowerCase()+constantes.tablaPaloString.get(j));
+                   //ahora generamos el resto de cartas de las 4 combinaciones posibles
+                    if(cartas.get(0).charAt(1) == 's' && cartas.get(1).charAt(1) == 's' )
+                    {
+                        //añadimos las 3 combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(0).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(0).charAt(0)+"h");
+                    }
+                    else if(cartas.get(0).charAt(1) == 'd' && cartas.get(1).charAt(1) == 'd' )
+                    {
+                        //añadimos las 3 combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(0).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(0).charAt(0)+"h");
+                    }
+                    else if(cartas.get(0).charAt(1) == 'c' && cartas.get(1).charAt(1) == 'c' )
+                    {
+                        //añadimos las 3 combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(0).charAt(0)+"h");
+                    }
+                    else if(cartas.get(0).charAt(1) == 'h' && cartas.get(1).charAt(1) == 'h' )
+                    {
+                        //añadimos las 3 combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(0).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(0).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(0).charAt(0)+"c");
+                    }
             
           }
        }
@@ -183,6 +339,7 @@ public class Baraja
         {
             usarCarta(cartas.get(0));
             usarCarta(cartas.get(1));
+            
             return cartas;
         }
         else
@@ -193,9 +350,7 @@ public class Baraja
    
    public ArrayList<String> dame2cartasLibresSuitedSinUsarCarta(String valor1,String valor2)
    {
-       ArrayList<String> cartas = new ArrayList<String>();
-       int cartasSinUsar = 0;
-       AntiguasConstantes constantes = new AntiguasConstantes ();
+       ArrayList<String> cartas = new ArrayList<>();
        boolean entro = false;
        for(int j = 0; j < 4; j++)
        {
@@ -206,6 +361,35 @@ public class Baraja
                  cartas.add( valor1.toLowerCase()+constantes.tablaPaloString.get(j));
               
                    cartas.add(valor2.toLowerCase()+constantes.tablaPaloString.get(j));
+                   //ahora generamos el resto de cartas de las 4 combinaciones posibles
+                    if(cartas.get(0).charAt(1) == 's' && cartas.get(1).charAt(1) == 's' )
+                    {
+                        //añadimos las 3 combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"h");
+                    }
+                    else if(cartas.get(0).charAt(1) == 'd' && cartas.get(1).charAt(1) == 'd' )
+                    {
+                        //añadimos las 3 combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"h");
+                    }
+                    else if(cartas.get(0).charAt(1) == 'c' && cartas.get(1).charAt(1) == 'c' )
+                    {
+                        //añadimos las 3 combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"h");
+                    }
+                    else if(cartas.get(0).charAt(1) == 'h' && cartas.get(1).charAt(1) == 'h' )
+                    {
+                        //añadimos las 3 combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"c");
+                    }
             
           }
        }
@@ -226,12 +410,10 @@ public class Baraja
    {
        valor1 = valor1.toLowerCase();
        valor2 = valor2.toLowerCase();
-       ArrayList<String> cartas = new ArrayList<String>();
-       int cartasSinUsar = 0;
-       AntiguasConstantes constantes = new AntiguasConstantes ();
+       ArrayList<String> cartas = new ArrayList<>();
   
-       int ini = 0;
-       int fin = 0;
+       int ini;
+       int fin;
        if(valor1.equalsIgnoreCase(constantes.tablaValorString.get(constantes.ACE)))
        {
            fin = constantes.KING+1;
@@ -307,12 +489,10 @@ public class Baraja
    {
        valor1 = valor1.toLowerCase();
        valor2 = valor2.toLowerCase();
-       ArrayList<String> cartas = new ArrayList<String>();
-       int cartasSinUsar = 0;
-       AntiguasConstantes constantes = new AntiguasConstantes ();
+       ArrayList<String> cartas = new ArrayList<>();
   
-       int ini = 0;
-       int fin = 0;
+       int ini;
+       int fin;
        if(valor1.equalsIgnoreCase(constantes.tablaValorString.get(constantes.ACE)))
        {
            fin = constantes.KING+1;
@@ -363,9 +543,39 @@ public class Baraja
             {
                 
                 cartas.add(suitedCombinadas[k]);
-                
+                String carta1 = suitedCombinadas[k].substring(0, 2);
+                String carta2 = suitedCombinadas[k].substring(2, 4);
+                if(carta1.charAt(1) == 's' && carta2.charAt(1) == 's' )
+                {
+                        //añadimos las 3 combinaciones restantes
+                        cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"d");
+                        cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"c");
+                        cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"h");
+                }
+                else if(carta1.charAt(1) == 'd' && carta2.charAt(1) == 'd' )
+                {
+                    //añadimos las 3 combinaciones restantes
+                    cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"s");
+                    cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"c");
+                    cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"h");
+                }
+                else if(carta1.charAt(1) == 'c' && carta2.charAt(1) == 'c' )
+                {
+                    //añadimos las 3 combinaciones restantes
+                    cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"s");
+                    cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"d");
+                    cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"h");
+                }
+                else if(carta1.charAt(1) == 'h' && carta2.charAt(1) == 'h' )
+                {
+                    //añadimos las 3 combinaciones restantes
+                    cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"s");
+                    cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"d");
+                    cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"c");
+                }
                
             }
+            
             
             return cartas;
         }
@@ -379,9 +589,7 @@ public class Baraja
    {
        valor1 = valor1.toLowerCase();
        valor2 = valor2.toLowerCase();
-       ArrayList<String> cartas = new ArrayList<String>();
-       int cartasSinUsar = 0;
-       AntiguasConstantes constantes = new AntiguasConstantes ();
+       ArrayList<String> cartas = new ArrayList<>();
   
        int ini = 0;
        int fin = 0;
@@ -461,15 +669,15 @@ public class Baraja
    {
        valor1 = valor1.toLowerCase();
        valor2 = valor2.toLowerCase();
-       ArrayList<String> cartas = new ArrayList<String>();
-       int cartasSinUsar = 0;
-       AntiguasConstantes constantes = new AntiguasConstantes ();
+       ArrayList<String> cartas = new ArrayList<>();
   
-       int ini = 0;
-       int fin = 0;
+       int ini ;
+       int fin ;
        if(valor1.equalsIgnoreCase(constantes.tablaValorString.get(constantes.ACE)))
        {
            fin = constantes.KING+1;
+       int cartasSinUsar = 0;
+       AntiguasConstantes constantes = new AntiguasConstantes ();
            ini = constantes.tablaStringValor.get(valor2);
        }
        else
@@ -477,7 +685,6 @@ public class Baraja
            fin = constantes.tablaStringValor.get(valor1);
            ini = constantes.tablaStringValor.get(valor2);
        }
-       boolean hayRango = true;
        int meta = fin -ini ;
        int numParejasAsignadas = 0;
        String offSuitedCombinadas [] = new String [fin];
@@ -501,7 +708,219 @@ public class Baraja
                         {
                            
                             offSuitedCombinadas[k] = valor1+constantes.tablaPaloString.get(j)+constantes.tablaValorString.get(k)+constantes.tablaPaloString.get(h);
-                            
+                            String carta1 = offSuitedCombinadas[k].substring(0, 2);
+                            String carta2 = offSuitedCombinadas[k].substring(2, 4);
+                            //ahora generamos el resto de cartas de las 12 combinaciones posibles
+                            if(carta1.charAt(1) == 's' && carta2.charAt(1) == 'd')
+                            {
+                                cartas.add(carta1.charAt(0)+ "d"+ carta2.charAt(0)+ "s");
+                                //añadimos las cinco combinaciones restantes
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"h");
+
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"c");
+                            }
+                            else if(carta1.charAt(1) == 'd' && carta2.charAt(1) == 's')
+                            {
+                                cartas.add(carta1.charAt(0)+ "s"+ carta2.charAt(0)+ "d");
+                                //añadimos las cinco combinaciones restantes
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"h");
+
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"c");
+                            }
+                            //sd ds sc
+                            else if(carta1.charAt(1) == 's' && carta2.charAt(1) == 'c')
+                            {
+                                cartas.add(carta1.charAt(0)+ "s"+ carta2.charAt(0)+ "d");
+                                //añadimos las cinco combinaciones restantes
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"h");
+
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"c");
+                            }
+                            //sd ds sc cs
+                            else if(carta1.charAt(1) == 'c' && carta2.charAt(1) == 's')
+                            {
+                                cartas.add(carta1.charAt(0)+ "s"+ carta2.charAt(0)+ "d");
+                                //añadimos las cinco combinaciones restantes
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"h");
+
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"c");
+                            }
+
+                            //sd ds sc cs sh
+                            else if(carta1.charAt(1) == 's' && carta2.charAt(1) == 'h')
+                            {
+                                cartas.add(carta1.charAt(0)+ "s"+ carta2.charAt(0)+ "d");
+                                //añadimos las cinco combinaciones restantes
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"h");
+
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"c");
+                            }
+
+                            //sd ds sc cs sh hs
+                            else if(carta1.charAt(1) == 'h' && carta2.charAt(1) == 's')
+                            {
+                                cartas.add(carta1.charAt(0)+ "s"+ carta2.charAt(0)+ "d");
+                                //añadimos las cinco combinaciones restantes
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"h");
+
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"c");
+                            }
+
+                            //sd ds sc cs sh hs ch
+                            else if(carta1.charAt(1) == 'c' && carta2.charAt(1) == 'h')
+                            {
+                                cartas.add(carta1.charAt(0)+ "s"+ carta2.charAt(0)+ "d");
+                                //añadimos las cinco combinaciones restantes
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"s");
+
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"c");
+                            }
+
+                            //sd ds sc cs sh hs ch hc
+                            else if(carta1.charAt(1) == 'h' && carta2.charAt(1) == 'c')
+                            {
+                                cartas.add(carta1.charAt(0)+ "s"+ carta2.charAt(0)+ "d");
+                                //añadimos las cinco combinaciones restantes
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"s");
+
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"h");
+                            }
+
+                            //sd ds sc cs sh hs ch hc dc
+                            else if(carta1.charAt(1) == 'd' && carta2.charAt(1) == 'c')
+                            {
+                                cartas.add(carta1.charAt(0)+ "s"+ carta2.charAt(0)+ "d");
+                                //añadimos las cinco combinaciones restantes
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"s");
+
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"h");
+                            }
+
+                            //sd ds sc cs sh hs ch hc dc cd
+                            else if(carta1.charAt(1) == 'c' && carta2.charAt(1) == 'd')
+                            {
+                                cartas.add(carta1.charAt(0)+ "s"+ carta2.charAt(0)+ "d");
+                                //añadimos las cinco combinaciones restantes
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"s");
+
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"h");
+                            }
+
+                            //sd ds sc cs sh hs ch hc dc cd dh
+                            else if(carta1.charAt(1) == 'd' && carta2.charAt(1) == 'h')
+                            {
+                                cartas.add(carta1.charAt(0)+ "s"+ carta2.charAt(0)+ "d");
+                                //añadimos las cinco combinaciones restantes
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"s");
+
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"h");
+                            }
+
+                            //sd ds sc cs sh hs ch hc dc cd dh hd
+                            else if(carta1.charAt(1) == 'h' && carta2.charAt(1) == 'd')
+                            {
+                                cartas.add(carta1.charAt(0)+ "s"+ carta2.charAt(0)+ "d");
+                                //añadimos las cinco combinaciones restantes
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"s");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"d");
+                                cartas.add(carta1.charAt(0)+"h"+carta2.charAt(0)+"s");
+
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"s"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"c");
+                                cartas.add(carta1.charAt(0)+"d"+carta2.charAt(0)+"h");
+                                cartas.add(carta1.charAt(0)+"c"+carta2.charAt(0)+"h");
+                            }
                             numParejasAsignadas++;
                         } 
                    }
@@ -529,12 +948,10 @@ public class Baraja
             return null;
         }
    }
-   
+   /*
    public ArrayList<String> dame2cartasLibresOffSuited(String valor1,String valor2)
    {
-       ArrayList<String> cartas = new ArrayList<String>();
-       int cartasSinUsar = 0;
-       AntiguasConstantes constantes = new AntiguasConstantes ();
+       ArrayList<String> cartas = new ArrayList<>();
        boolean entro = false;
        for(int k = 0; k < 4; k++)
        {
@@ -557,20 +974,17 @@ public class Baraja
         if(entro )
         {
             usarCarta(cartas.get(0));
-            usarCarta(cartas.get(1));
+            usarCarta(carta2);
             return cartas;
         }
         else
         {
             return null;
         }
-   }
-    
+   }*/
    public ArrayList<String> dame2cartasLibresOffSuitedSinUsarCarta(String valor1,String valor2)
    {
-       ArrayList<String> cartas = new ArrayList<String>();
-       int cartasSinUsar = 0;
-       AntiguasConstantes constantes = new AntiguasConstantes ();
+       ArrayList<String> cartas = new ArrayList<>();
        boolean entro = false;
        for(int k = 0; k < 4; k++)
        {
@@ -583,6 +997,221 @@ public class Baraja
                       cartas.add( valor1.toLowerCase()+constantes.tablaPaloString.get(k));
 
                         cartas.add(valor2.toLowerCase()+constantes.tablaPaloString.get(j));
+                    
+                    //ahora generamos el resto de cartas de las 12 combinaciones posibles
+                    if(cartas.get(0).charAt(1) == 's' && cartas.get(1).charAt(1) == 'd')
+                    {
+                        cartas.add(cartas.get(0).charAt(0)+ "d"+ cartas.get(1).charAt(0)+ "s");
+                        //añadimos las cinco combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"h");
+                        
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"c");
+                    }
+                    else if(cartas.get(0).charAt(1) == 'd' && cartas.get(1).charAt(1) == 's')
+                    {
+                        cartas.add(cartas.get(0).charAt(0)+ "s"+ cartas.get(1).charAt(0)+ "d");
+                        //añadimos las cinco combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"h");
+                        
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"c");
+                    }
+                    //sd ds sc
+                    else if(cartas.get(0).charAt(1) == 's' && cartas.get(1).charAt(1) == 'c')
+                    {
+                        cartas.add(cartas.get(0).charAt(0)+ "s"+ cartas.get(1).charAt(0)+ "d");
+                        //añadimos las cinco combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"h");
+                        
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"c");
+                    }
+                    //sd ds sc cs
+                    else if(cartas.get(0).charAt(1) == 'c' && cartas.get(1).charAt(1) == 's')
+                    {
+                        cartas.add(cartas.get(0).charAt(0)+ "s"+ cartas.get(1).charAt(0)+ "d");
+                        //añadimos las cinco combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"h");
+                        
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"c");
+                    }
+                    
+                    //sd ds sc cs sh
+                    else if(cartas.get(0).charAt(1) == 's' && cartas.get(1).charAt(1) == 'h')
+                    {
+                        cartas.add(cartas.get(0).charAt(0)+ "s"+ cartas.get(1).charAt(0)+ "d");
+                        //añadimos las cinco combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"h");
+                        
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"c");
+                    }
+                    
+                    //sd ds sc cs sh hs
+                    else if(cartas.get(0).charAt(1) == 'h' && cartas.get(1).charAt(1) == 's')
+                    {
+                        cartas.add(cartas.get(0).charAt(0)+ "s"+ cartas.get(1).charAt(0)+ "d");
+                        //añadimos las cinco combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"h");
+                        
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"c");
+                    }
+                    
+                    //sd ds sc cs sh hs ch
+                    else if(cartas.get(0).charAt(1) == 'c' && cartas.get(1).charAt(1) == 'h')
+                    {
+                        cartas.add(cartas.get(0).charAt(0)+ "s"+ cartas.get(1).charAt(0)+ "d");
+                        //añadimos las cinco combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"s");
+                        
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"c");
+                    }
+                    
+                    //sd ds sc cs sh hs ch hc
+                    else if(cartas.get(0).charAt(1) == 'h' && cartas.get(1).charAt(1) == 'c')
+                    {
+                        cartas.add(cartas.get(0).charAt(0)+ "s"+ cartas.get(1).charAt(0)+ "d");
+                        //añadimos las cinco combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"s");
+                        
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"h");
+                    }
+                    
+                    //sd ds sc cs sh hs ch hc dc
+                    else if(cartas.get(0).charAt(1) == 'd' && cartas.get(1).charAt(1) == 'c')
+                    {
+                        cartas.add(cartas.get(0).charAt(0)+ "s"+ cartas.get(1).charAt(0)+ "d");
+                        //añadimos las cinco combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"s");
+                        
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"h");
+                    }
+                    
+                    //sd ds sc cs sh hs ch hc dc cd
+                    else if(cartas.get(0).charAt(1) == 'c' && cartas.get(1).charAt(1) == 'd')
+                    {
+                        cartas.add(cartas.get(0).charAt(0)+ "s"+ cartas.get(1).charAt(0)+ "d");
+                        //añadimos las cinco combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"s");
+                        
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"h");
+                    }
+                    
+                    //sd ds sc cs sh hs ch hc dc cd dh
+                    else if(cartas.get(0).charAt(1) == 'd' && cartas.get(1).charAt(1) == 'h')
+                    {
+                        cartas.add(cartas.get(0).charAt(0)+ "s"+ cartas.get(1).charAt(0)+ "d");
+                        //añadimos las cinco combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"s");
+                        
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"h");
+                    }
+                    
+                    //sd ds sc cs sh hs ch hc dc cd dh hd
+                    else if(cartas.get(0).charAt(1) == 'h' && cartas.get(1).charAt(1) == 'd')
+                    {
+                        cartas.add(cartas.get(0).charAt(0)+ "s"+ cartas.get(1).charAt(0)+ "d");
+                        //añadimos las cinco combinaciones restantes
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"s");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"d");
+                        cartas.add(cartas.get(0).charAt(0)+"h"+cartas.get(1).charAt(0)+"s");
+                        
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"s"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"c");
+                        cartas.add(cartas.get(0).charAt(0)+"d"+cartas.get(1).charAt(0)+"h");
+                        cartas.add(cartas.get(0).charAt(0)+"c"+cartas.get(1).charAt(0)+"h");
+                    }
+                    
+                    
+                    
 
                }
             }
@@ -617,6 +1246,7 @@ public class Baraja
         int id = -1 ;
         for(int i = 0; i < 52;i++)
         {
+            
             if(siglas.compareTo(baraja[i].getDigito()+baraja[i].getPalo()) == 0)
             {
                 id = i;
@@ -626,14 +1256,41 @@ public class Baraja
         return id;
     }
     
-     public Carta[] generaJugada(int n)
-    {
+    public Carta[] generaJugada(int n)
+            {
         
         int i = 0;
         
         Carta [] cartas = new Carta[n];
         
-        while(i < n)
+        while(i < cartas.length)
+        {
+            //obtenemos 5 cartas aleatorias
+            int valor =(int) Math.floor(Math.random()*51);
+          //System.out.println(valor);
+           //si la carta esta disponible la generamos y la ponemos a no disponible
+            if(getCarta(valor).getDisponible())
+            {
+                getCarta(valor).setDisponible(false);
+                
+                cartas[i] = getCarta(valor);
+                i++;   
+                
+            }
+            
+        }
+        return cartas;
+        
+    }
+    
+    public Carta[] generaJugada(Carta[] cartas)
+    {
+        
+        int i = 0;
+        
+        //Carta [] cartas = new Carta[n];
+        
+        while(i < cartas.length)
         {
             //obtenemos 5 cartas aleatorias
             int valor =(int) Math.floor(Math.random()*51);
@@ -668,26 +1325,21 @@ public class Baraja
      public boolean esCartaSinUsar(String carta)
      {
          int id =getIdCarta(carta.toLowerCase());
-         if(baraja[id].getDisponible())
-         {
-             return true;
-         }
-         else
-         {
-             return false;
-         }
+         return baraja[id].getDisponible();
      }
     
     public Carta getCartaMasAlta(Carta [] cartas)
     {
         return getCartasOrdenadasMenorAMayor(cartas)[cartas.length-1];
     }
-    public String getJugadaString(int n)
+    //public String getJugadaString(int n)
+    public String getJugadaString(Carta[] cartas)
     {
-        Carta [] cartas =generaJugada(n);
+        //Carta [] cartas =generaJugada(n);
+        cartas = generaJugada(cartas);
         String cadena = "";
         int i = 0;
-        while(i < n)
+        while(i < cartas.length)
         {
             cadena = cadena + cartas[i].getDigito()+cartas[i].getPalo();
             i++;
@@ -698,9 +1350,7 @@ public class Baraja
     //daria ordenadas todas las cartas usadas hasta el momento
     public String getStringCartasOrdenadasPorPaloMenorAMayor(Carta [] cartas)
     {
-        int max = 0;
         boolean[][] matrizCartas = new boolean[4][14];
-        AntiguasConstantes c = new AntiguasConstantes();
         
         for(int i= 0; i < 4;i++)
          {
@@ -711,10 +1361,8 @@ public class Baraja
          }
         for(int i = 0; i < cartas.length;i++)
         {
-            String digito = cartas[i].getDigito();
-            String palo = cartas[i].getPalo();
             
-            matrizCartas[c.tablaStringPalo.get(palo)][cartas[i].getValor()] = false;
+            matrizCartas[constantes.tablaStringPalo.get(cartas[i].getPalo())][cartas[i].getValor()] = false;
         }
       
         String cadena = "";
@@ -724,7 +1372,7 @@ public class Baraja
             {
                 if(!matrizCartas[i][j])
                 {
-                  cadena = cadena + c.tablaValorString.get(j) + c.tablaPaloString.get(i);
+                  cadena = cadena + constantes.tablaValorString.get(j) + constantes.tablaPaloString.get(i);
    
                     
                 }
@@ -750,6 +1398,24 @@ public class Baraja
        {
            carta[j] = this.getCarta(this.getIdCarta(cartas.substring(i, i+2).toLowerCase()));
            usarCarta(cartas.substring(i, i+2));
+           j++;
+           i = i +2;
+       }
+       
+       return carta;
+    }
+    public Carta[] generaCartasConStringSinUsarCarta(String cartas)
+    {
+       int numcartas = cartas.length()/2;
+       Carta[] carta = new Carta[numcartas];
+       int i = 0;
+       int j = 0;
+       while(i <= cartas.length() -2)
+       {
+           carta[j] = this.getCarta(this.getIdCarta(cartas.substring(i, i+2).toLowerCase()));
+        
+           
+           //usarCarta(cartas.substring(i, i+2));
            j++;
            i = i +2;
        }

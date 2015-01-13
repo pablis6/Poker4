@@ -11,14 +11,14 @@ import carta.Carta;
  *
  * @author Javier
  */
-public class Jugador {
+public class Player {
     
     private Carta carta1, carta2;
     private int dinero, vecesGanadas, vecesPerdidas, vecesEmpatadas;
     
     /*Constructor de Jugador. Inicializa el dinero que posee el jugador
     actual a 0*/
-    public Jugador(int dinero){        
+    public Player(int dinero){        
         this.dinero = dinero;
         this.vecesGanadas = 0;
         this.vecesPerdidas = 0;

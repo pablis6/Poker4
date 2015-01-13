@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class Constantes {
     
-    public static final double NUM_ITERACIONES = 100000;
+    public static final double NUM_ITERACIONES = 2000;
     //posiciones
     public static final int UTG = 0;
     public static final int UTG1 = 1;
@@ -37,8 +37,8 @@ public class Constantes {
     public static final String SBs = "SB";
     public static final String BBs  = "BB";
     
-    
-    
+    public static final int NUM_VUELTAS_2JUG_CUANDO_BOARD_0 = 1712304;
+    public static final int NUM_VUELTAS_3JUG_CUANDO_BOARD_0 = 1370754;
     public static final String RUTA_RANKINGS = "rankingsPersonalizados/";
     public static final String RUTA_RANGOS = "rangosPersonalizados/";
     public static final String RUTA_MANOS_POKERSTARS = "manosPokerStars/";
@@ -159,9 +159,14 @@ public class Constantes {
    
    public static  Map<String,Integer> tablaCartaString = new HashMap<String,Integer>();
    
+   
    //Matriz de valores
    public static int[][] valores = new int[13][13];
 
+   
+   
+   //conversor dado un String, devuelve el numero del boton String To Integer;
+   public static  Map<String,Double> valoresManoPuntos2Jug = new HashMap<String,Double>();
    //Matriz de rangos
    public double[][] rangos = new double[13][13];
    public class rangos{
