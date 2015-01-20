@@ -45,8 +45,9 @@ public class AntiguasConstantes {
    public static final int ACE  = 12;
    
    public static final int BANCA = 0;
-   public static final int JUGADOR = 2;
-   public static final int EMPATE = 1;
+   public static final int JUGADOR = 1;
+   public static final int EMPATE = 2;
+   public static final int BOARD = 3;
    
    
    //jugadas

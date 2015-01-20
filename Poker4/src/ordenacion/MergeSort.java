@@ -739,6 +739,8 @@ public class MergeSort {
             iniciaEmpatados();
             jugadaEmpatados = jugada;
              empatados[id] = id;
+            
+             
         }
             
     }

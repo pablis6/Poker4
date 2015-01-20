@@ -7,11 +7,10 @@ package gui;
 
 import carta.*;
 import constantes.*;
-import static constantes.AntiguasConstantes.tablaManoValores;
+import equity.Equity;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import jugada.Jugador;
 import jugada.ParserJugada;
 import jugada.ValorMano;
@@ -41,11 +40,11 @@ public class PokerCaribean extends javax.swing.JFrame {
     private boolean menorTrio;
     private String nombreJugadaBanca;
     private String nombreJugadaJ;
-    
+    static PokerCaribean instance;
     /**
      * Creates new form pokerCaribean
      */
-    public PokerCaribean() {
+    private PokerCaribean() {
         
         initComponents();
         cons = new Constantes();
@@ -104,6 +103,45 @@ public class PokerCaribean extends javax.swing.JFrame {
         this.tfEmpatadas.setText(Integer.toString(jugador.getEmpatado()));
     }
 
+    public void setEquity(double eq)
+    {
+        tfEquity.setText(Double.toString(eq));
+    }
+    
+    public void reiniciaEquity()
+    {
+        tfEquity.setText("");
+    }
+    
+    public String[] getCartas(int numJug)
+    {
+        String []cartas = new String[2];
+        
+        switch(numJug)
+        {
+            case AntiguasConstantes.JUGADOR:
+                cartas[0]= jugador.getCarta1().getDenominacion();
+                cartas[1]= jugador.getCarta2().getDenominacion();
+                break;
+           
+            case AntiguasConstantes.BANCA:
+                cartas[0]= banca.getCarta1().getDenominacion();
+                cartas[1]= banca.getCarta2().getDenominacion();
+                break;                
+        }
+        return cartas;
+    }
+    
+    public String getBoard()
+    {
+        String miBoard = "";
+        for(int i =0; i < 5 && board[i]!= null;i++)
+        {
+            miBoard = miBoard + board[i].getDenominacion();
+        }
+        return miBoard;
+          
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -134,6 +172,10 @@ public class PokerCaribean extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        btAuto = new javax.swing.JButton();
+        tfEquity = new javax.swing.JTextField();
+        tfNumJugadas = new javax.swing.JTextField();
+        jbManual = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmSalir = new javax.swing.JMenu();
         jmRecargarSaldo = new javax.swing.JMenu();
@@ -202,6 +244,23 @@ public class PokerCaribean extends javax.swing.JFrame {
         jLabel7.setText("euros");
         jLabel7.setVisible(false);
 
+        btAuto.setText("Auto");
+        btAuto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAutoActionPerformed(evt);
+            }
+        });
+
+        tfEquity.setEditable(false);
+        tfEquity.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        jbManual.setText("Manual");
+        jbManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbManualActionPerformed(evt);
+            }
+        });
+
         jmSalir.setText("Salir");
         jMenuBar1.add(jmSalir);
 
@@ -210,9 +269,9 @@ public class PokerCaribean extends javax.swing.JFrame {
             public void menuSelected(javax.swing.event.MenuEvent evt) {
                 jmRecargarSaldoMenuSelected(evt);
             }
-            public void menuDeselected(javax.swing.event.MenuEvent evt) {
-            }
             public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
         });
         jMenuBar1.add(jmRecargarSaldo);
@@ -230,7 +289,9 @@ public class PokerCaribean extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbManual)
+                        .addGap(243, 243, 243))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(jLabel3)
@@ -238,7 +299,9 @@ public class PokerCaribean extends javax.swing.JFrame {
                         .addComponent(lbBanca, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(551, Short.MAX_VALUE)
+                .addGap(44, 44, 44)
+                .addComponent(tfEquity, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
@@ -246,23 +309,26 @@ public class PokerCaribean extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7))
+                    .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lblEmpatado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblApuestas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblGanado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPerdido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblStack, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(lblEmpatado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblApuestas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblGanado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblPerdido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblStack, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfNumJugadas, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btAuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btRetirarse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btApostar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tfDineroApostado)
                             .addComponent(tfMiStack)
                             .addComponent(tfGanados)
                             .addComponent(tfPerdidos)
-                            .addComponent(tfEmpatadas, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfEmpatadas, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))))
                 .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
@@ -274,7 +340,7 @@ public class PokerCaribean extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbBanca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel6)
@@ -298,15 +364,25 @@ public class PokerCaribean extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btApostar)
                 .addGap(18, 18, 18)
-                .addComponent(btRetirarse)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btRetirarse)
+                    .addComponent(tfEquity, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfMiStack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblStack))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbJugador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbJugador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btAuto)
+                            .addComponent(tfNumJugadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbManual))))
                 .addGap(17, 17, 17))
         );
 
@@ -315,7 +391,6 @@ public class PokerCaribean extends javax.swing.JFrame {
 
     private void btApostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btApostarActionPerformed
         if(btApostar.getText().equalsIgnoreCase("Empezar")){
-            
             lbJugador.setText("");
             lbBanca.setText("");
             jLabel5.setVisible(false);
@@ -391,78 +466,58 @@ public class PokerCaribean extends javax.swing.JFrame {
             //mostrar cartas banca
             cartasBanca[0].setImagen("/resources/" + banca.getCarta1().getDenominacion() + ".png");
             cartasBanca[1].setImagen("/resources/" + banca.getCarta2().getDenominacion()+ ".png");
-            //analizar showdown
-            for(int i = 0; i < 5; i++){
-                cartasB[i+2] = board[i];
-                cartasJ[i+2] = board[i];
-            }
-            /*
-            resultadoJ = va.valorarMiMano(cartasJ);
-            resultadoB = va.valorarMiMano(cartasB);
-            ganador = ganador(resultadoJ, resultadoB);
-            */
-            MergeSort merge = new MergeSort(2);
-             merge.iniciaEmpatados();
-             
-             Jugador[] jugadoresConCartas = new Jugador[2];
-             va = new ValorMano();
-             jugadoresConCartas[0] = new Jugador(cartasJ,acons.JUGADOR);
-             jugadoresConCartas[0].setJugada(va.valorarMiMano(cartasJ));
-     
-             va = new ValorMano();
-             jugadoresConCartas[1] = new Jugador(cartasB,acons.BANCA);
-             jugadoresConCartas[1].setJugada(va.valorarMiMano(cartasB));
-           
-             
-             //ESTO ESTA BIEN
-             
-            Jugador jugConCartasCopy[] = new Jugador[2];
-            System.arraycopy(jugadoresConCartas, 0, jugConCartasCopy, 0, jugadoresConCartas.length);
-             Jugador jugOrdenados []= merge.mergeSort(jugConCartasCopy);
-             //Jugador jugOrdenados []= merge.mergeSort(jugConCartas);
-            //int tamEmpatados =  merge.dameEmpatados().size();
-            //System.out.println(jugOrdenados[jugOrdenados.length-1].getJugada()[0]);
-             
-             //SI estan empatados
-            if(merge.estaJugadorEmpatadoEnLaLista(jugOrdenados[1].getId())){
+            analizarShowDown();
+            
+        }
+    }//GEN-LAST:event_btApostarActionPerformed
 
-                ganador=acons.EMPATE;/*
-                lbJugador.setText(acons.tablaManoValores.get(jugOrdenados[1].getJugada()[0]));
-                lbBanca.setText(acons.tablaManoValores.get(jugOrdenados[0].getJugada()[0]));*/
+    private void analizarShowDown(){
+        //analizar showdown
+        for(int i = 0; i < 5; i++){
+            cartasB[i+2] = board[i];
+            cartasJ[i+2] = board[i];
+        }
+        MergeSort merge = new MergeSort(2);
+         merge.iniciaEmpatados();
+
+         Jugador[] jugadoresConCartas = new Jugador[2];
+         va = new ValorMano();
+         jugadoresConCartas[0] = new Jugador(cartasJ,acons.JUGADOR);
+         jugadoresConCartas[0].setJugada(va.valorarMiMano(cartasJ));
+
+         va = new ValorMano();
+         jugadoresConCartas[1] = new Jugador(cartasB,acons.BANCA);
+         jugadoresConCartas[1].setJugada(va.valorarMiMano(cartasB));
+
+        Jugador jugConCartasCopy[] = new Jugador[2];
+        System.arraycopy(jugadoresConCartas, 0, jugConCartasCopy, 0, jugadoresConCartas.length);
+         Jugador jugOrdenados []= merge.mergeSort(jugConCartasCopy);
+
+        //SI estan empatados
+        if(merge.estaJugadorEmpatadoEnLaLista(jugOrdenados[1].getId())){
+
+            ganador=acons.EMPATE;
+            ponJugadaEnLabel(lbJugador, jugOrdenados[1].getJugada());
+            ponJugadaEnLabel(lbBanca, jugOrdenados[0].getJugada());
+        }
+        else{
+            if (jugOrdenados[1].getId() == acons.BANCA){//gana la banca
+                ganador = acons.BANCA;
+                ponJugadaEnLabel(lbJugador, jugOrdenados[0].getJugada());
+                ponJugadaEnLabel(lbBanca, jugOrdenados[1].getJugada());
+            }
+            else if (jugOrdenados[1].getId() == acons.JUGADOR){//gana el jugador
+                ganador = acons.JUGADOR;
+                if(jugOrdenados[1].getJugada()[0] == acons.TWO_PAIR_INT || jugOrdenados[1].getJugada()[0] == acons.PAIR_INT || jugOrdenados[1].getJugada()[0] == acons.HIGH_CARD_INT){
+                    this.menorTrio = true;
+                }
+                else{
+                    this.menorTrio = false;
+                }
                 ponJugadaEnLabel(lbJugador, jugOrdenados[1].getJugada());
                 ponJugadaEnLabel(lbBanca, jugOrdenados[0].getJugada());
             }
-            else{
-                if (jugOrdenados[1].getId() == acons.BANCA){//gana la banca
-                    ganador = acons.BANCA;
-                    ponJugadaEnLabel(lbJugador, jugOrdenados[0].getJugada());
-                    ponJugadaEnLabel(lbBanca, jugOrdenados[1].getJugada());
-                    /*
-                    lbJugador.setText(acons.tablaManoValores.get(jugOrdenados[0].getJugada()[0]));
-                    lbBanca.setText(acons.tablaManoValores.get(jugOrdenados[1].getJugada()[0]));
-                    */
-                }
-                else if (jugOrdenados[1].getId() == acons.JUGADOR){//gana el jugador
-                    ganador = acons.JUGADOR;
-                    if(jugOrdenados[1].getJugada()[0] == acons.TWO_PAIR_INT || jugOrdenados[1].getJugada()[0] == acons.PAIR_INT || jugOrdenados[1].getJugada()[0] == acons.HIGH_CARD_INT){
-                        this.menorTrio = true;
-                    }
-                    else{
-                        this.menorTrio = false;
-                    }/*
-                    lbJugador.setText(acons.tablaManoValores.get(jugOrdenados[1].getJugada()[0]));
-                    lbBanca.setText(acons.tablaManoValores.get(jugOrdenados[0].getJugada()[0]));
-                
-                    */
-                    ponJugadaEnLabel(lbJugador, jugOrdenados[1].getJugada());
-                    ponJugadaEnLabel(lbBanca, jugOrdenados[0].getJugada());
-                }
-                
-            }
-            
-            
-            
-            if(ganador == acons.EMPATE){//empate
+        }if(ganador == acons.EMPATE){//empate
                 jugador.aniadirCredito(dineroApuesta);
                 tfResultado.setText("EMPATE");
                 tfResultado.setForeground(Color.YELLOW);
@@ -508,9 +563,8 @@ public class PokerCaribean extends javax.swing.JFrame {
             btApostar.setText("Empezar");
             tfDineroApostado.setText(Integer.toString(dineroApuesta));
             tfMiStack.setText(Integer.toString(jugador.getDinero()));
-        }
-    }//GEN-LAST:event_btApostarActionPerformed
-
+    }
+    
     private void btRetirarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRetirarseActionPerformed
         //quitar cartas de jugador y banca y resetear baraja
         
@@ -600,6 +654,182 @@ public class PokerCaribean extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfResultadoActionPerformed
 
+    private void btAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAutoActionPerformed
+        // TODO add your handling code here:
+        Equity equity;
+        double e;
+        equity = new Equity();
+        
+        for(int i = 0; i < 1; i++){
+            if(jugador.getDinero() < 5){
+                JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
+                   "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            else{
+                resetearCartas();
+                board = new Carta[5];
+                jugador.sacarCredito(1);
+                dineroApuesta ++;
+
+                //banca
+                aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(2)));
+                cartasB[0] = aux[0];
+                cartasB[1] = aux[1];
+                banca.setCarta1(cartasB[0]);
+                banca.setCarta2(cartasB[1]);
+
+                //jugador
+                aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(2)));
+                cartasJ[0] = aux[0];
+                cartasJ[1] = aux[1];
+                jugador.setCarta1(cartasJ[0]);
+                jugador.setCarta2(cartasJ[1]);
+                
+                baraja.deshabilitarCarta(cartasB[0].getDenominacion());
+                baraja.deshabilitarCarta(cartasB[1].getDenominacion());
+
+                tfDineroApostado.setText(Integer.toString(dineroApuesta));
+                tfMiStack.setText(Integer.toString(jugador.getDinero()));
+
+                //mano
+                e = equity.calculaEquity();
+                if(e < (4/9))
+                    btRetirarseActionPerformed(evt);
+                else{
+                    //flop
+                    jugador.sacarCredito(2);
+                    dineroApuesta+=2;
+                    //generar tres cartas aleatorias para flop
+                    aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(3)));
+                    for(int j = 0; j < 3; j++){
+                        board[j] = aux[j];
+                    }
+                    tfDineroApostado.setText(Integer.toString(dineroApuesta));
+                    tfMiStack.setText(Integer.toString(jugador.getDinero()));
+                    e = equity.calculaEquity();
+                    if(e < (2/9))
+                        btRetirarseActionPerformed(evt);
+                    else{
+                        //turn
+                        jugador.sacarCredito(1);
+                        dineroApuesta++;
+                        //generar carta aleatoria para turn
+                        aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(1)));
+                        board[3] = aux[0];
+                        
+                        tfDineroApostado.setText(Integer.toString(dineroApuesta));
+                        tfMiStack.setText(Integer.toString(jugador.getDinero()));
+                        e = equity.calculaEquity();
+                        if(e < (1/9))
+                            btRetirarseActionPerformed(evt);
+                        else{
+                            jugador.sacarCredito(1);
+                            dineroApuesta++;
+                            tfDineroApostado.setText(Integer.toString(dineroApuesta));
+                            tfMiStack.setText(Integer.toString(jugador.getDinero()));
+                            //generar carta aleatoria para river
+                            aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(1)));
+                            board[4] = aux[0];
+                            //analizar ShowDown
+                            analizarShowDown();
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_btAutoActionPerformed
+
+    private void jbManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbManualActionPerformed
+        // TODO add your handling code here:
+        Equity equity;
+        double e;
+        equity = new Equity();
+        
+        if(jugador.getDinero() < 5){
+            JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
+               "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        else{
+            resetearCartas();
+            board = new Carta[5];
+            jugador.sacarCredito(1);
+            dineroApuesta ++;
+
+            //banca
+            aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(2)));
+            cartasB[0] = aux[0];
+            cartasB[1] = aux[1];
+            banca.setCarta1(cartasB[0]);
+            banca.setCarta2(cartasB[1]);
+
+            //jugador
+            aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(2)));
+            cartasJ[0] = aux[0];
+            cartasJ[1] = aux[1];
+            jugador.setCarta1(cartasJ[0]);
+            jugador.setCarta2(cartasJ[1]);
+            cartasUsuario[0].setImagen("/resources/" + jugador.getCarta1().getDenominacion()+ ".png");
+            cartasUsuario[1].setImagen("/resources/" + jugador.getCarta2().getDenominacion()+ ".png");
+                    
+
+            baraja.deshabilitarCarta(cartasB[0].getDenominacion());
+            baraja.deshabilitarCarta(cartasB[1].getDenominacion());
+
+            tfDineroApostado.setText(Integer.toString(dineroApuesta));
+            tfMiStack.setText(Integer.toString(jugador.getDinero()));
+
+            //mano
+            e = equity.calculaEquity();
+            if(e < (4/9))
+                btRetirarseActionPerformed(evt);
+            else{
+                //flop
+                jugador.sacarCredito(2);
+                dineroApuesta+=2;
+                //generar tres cartas aleatorias para flop
+                aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(3)));
+                for(int j = 0; j < 3; j++){
+                    board[j] = aux[j];
+                    cartasComunes[j].setImagen("/resources/" + board[j].getDenominacion()+ ".png");
+                }
+                tfDineroApostado.setText(Integer.toString(dineroApuesta));
+                tfMiStack.setText(Integer.toString(jugador.getDinero()));
+                e = equity.calculaEquity();
+                if(e < (2/9))
+                    btRetirarseActionPerformed(evt);
+                else{
+                    //turn
+                    jugador.sacarCredito(1);
+                    dineroApuesta++;
+                    //generar carta aleatoria para turn
+                    aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(1)));
+                    board[3] = aux[0];
+                    cartasComunes[3].setImagen("/resources/" + board[3].getDenominacion()+ ".png");
+                    tfDineroApostado.setText(Integer.toString(dineroApuesta));
+                    tfMiStack.setText(Integer.toString(jugador.getDinero()));
+                    e = equity.calculaEquity();
+                    if(e < (1/9))
+                        btRetirarseActionPerformed(evt);
+                    else{
+                        jugador.sacarCredito(1);
+                        dineroApuesta++;
+                        tfDineroApostado.setText(Integer.toString(dineroApuesta));
+                        tfMiStack.setText(Integer.toString(jugador.getDinero()));
+                        //generar carta aleatoria para river
+                        aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(1)));
+                        board[4] = aux[0];cartasComunes[4].setImagen("/resources/" + board[4].getDenominacion()+ ".png");
+                        //mostrar cartas banca
+                        cartasBanca[0].setImagen("/resources/" + banca.getCarta1().getDenominacion() + ".png");
+                        cartasBanca[1].setImagen("/resources/" + banca.getCarta2().getDenominacion()+ ".png");
+            
+                        //analizar ShowDown
+                        analizarShowDown();
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jbManualActionPerformed
+
     public void setDinero(){
         tfMiStack.setText(Integer.toString(this.jugador.getDinero()));
     }
@@ -667,7 +897,8 @@ public class PokerCaribean extends javax.swing.JFrame {
         cartasUsuario[1].setImagen("/resources/reverso.JPG");
         cartasBanca[0].setImagen("/resources/reverso.JPG");
         cartasBanca[1].setImagen("/resources/reverso.JPG");
-        this.repaint();        
+        this.repaint();
+        
     }
     /**
      * @param args the command line arguments
@@ -707,6 +938,7 @@ public class PokerCaribean extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btApostar;
+    private javax.swing.JButton btAuto;
     private javax.swing.JButton btRetirarse;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -715,6 +947,7 @@ public class PokerCaribean extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JButton jbManual;
     private javax.swing.JMenu jmRecargarSaldo;
     private javax.swing.JMenu jmSalir;
     private javax.swing.JLabel lbBanca;
@@ -726,10 +959,25 @@ public class PokerCaribean extends javax.swing.JFrame {
     private javax.swing.JLabel lblStack;
     private javax.swing.JTextField tfDineroApostado;
     private javax.swing.JTextField tfEmpatadas;
+    private javax.swing.JTextField tfEquity;
     private javax.swing.JTextField tfGanados;
     private javax.swing.JTextField tfMiStack;
+    private javax.swing.JTextField tfNumJugadas;
     private javax.swing.JTextField tfPerdidos;
     private javax.swing.JTextField tfResultado;
     // End of variables declaration//GEN-END:variables
 
+    public static PokerCaribean getInstance ()
+    {
+        if(instance == null)
+        {
+            instance = new PokerCaribean();
+            return instance;
+        }
+        else
+        {
+            return instance;
+        }
+        
+    }
 }
