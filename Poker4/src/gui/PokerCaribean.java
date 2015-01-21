@@ -471,6 +471,31 @@ public class PokerCaribean extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btApostarActionPerformed
 
+    public String[] getRangos()
+    {
+        String [] rangos = new String[10];
+        rangos[0] = jugador.getCarta1().getDenominacion()+jugador.getCarta2().getDenominacion();
+        rangos[1] = banca.getCarta1().getDenominacion()+banca.getCarta2().getDenominacion();
+        /*
+        String rang = "";
+        for(int i = 0; i < rangos.length;i++)
+        {
+            if(!rangos[i].equalsIgnoreCase(""))
+            {
+                if(rang.length() == 0)
+                {
+                    rang =  rangos[i];
+                }
+                else
+                {
+                    rang = rang + Constantes.PATRON_SEPARACION + rangos[i];
+                }
+            }
+        }
+        System.out.println("Rango " + rang);
+        return rang.split(Constantes.PATRON_SEPARACION);*/
+        return rangos;
+    }
     private void analizarShowDown(){
         //analizar showdown
         for(int i = 0; i < 5; i++){
@@ -741,6 +766,7 @@ public class PokerCaribean extends javax.swing.JFrame {
 
     private void jbManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbManualActionPerformed
         // TODO add your handling code here:
+        /*
         Equity equity;
         double e;
         equity = new Equity();
@@ -827,6 +853,31 @@ public class PokerCaribean extends javax.swing.JFrame {
                     }
                 }
             }
+        }*/
+        lbJugador.setText("");
+        lbBanca.setText("");
+        jLabel5.setVisible(false);
+        jLabel6.setVisible(false);
+        jLabel6.setText("");
+        jLabel7.setVisible(false);
+        
+        btApostar.setText("Empezar");
+        dineroApuesta = 0;
+        tfResultado.setText("");
+        tfDineroApostado.setText(Integer.toString(dineroApuesta));
+        resetearCartas();
+        if(jugador.getDinero() >= 5)
+        {
+         btApostarActionPerformed(evt) ;
+         btApostarActionPerformed(evt) ;
+         btApostarActionPerformed(evt) ;
+         btApostarActionPerformed(evt) ;
+        }
+        else
+        {
+             JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
+                   "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
+              
         }
     }//GEN-LAST:event_jbManualActionPerformed
 
