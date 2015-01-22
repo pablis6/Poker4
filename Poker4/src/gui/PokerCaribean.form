@@ -108,7 +108,7 @@
                           <Component id="tfMiStack" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfGanados" max="32767" attributes="0"/>
                           <Component id="tfPerdidos" max="32767" attributes="0"/>
-                          <Component id="tfEmpatadas" max="32767" attributes="0"/>
+                          <Component id="tfEmpatadas" pref="74" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>

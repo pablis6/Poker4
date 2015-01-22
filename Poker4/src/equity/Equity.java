@@ -81,11 +81,11 @@ public class Equity
         merge.reset();
 
         jugConCartas[0].setCartas(rangos[0]+rangos[1]);
-        Carta cartasJug [] = baraja.generaJugada(2);
-        jugConCartas[1].setCartas(cartasJug[0].getDenominacion()+cartasJug[1].getDenominacion());
+        /*Carta cartasJug [] = baraja.generaJugada(2);
+        jugConCartas[1].setCartas(cartasJug[0].getDenominacion()+cartasJug[1].getDenominacion());*/
         
         //metemos las cartas que podemos poner como board
-        longi = 48-(board.length()/2);
+        /*longi = 50-(board.length()/2);
         System.out.println(board.length()/2);
         Carta[] cartas = new Carta[longi];
         int e = 0;
@@ -95,36 +95,42 @@ public class Equity
                 cartas[e]= baraja.getCarta(c);
                 e++;
             }
-        }
+        }*/
         if(hayCartasBoard){
             if(board.length()>= 6 && board.length() < 8){
                 boards[0] = cartasBoard[0];
                 boards[1] = cartasBoard[1];
                 boards[2] = cartasBoard[2];
-                for(unoIndex = 0; unoIndex < longi-1; unoIndex++){
-                    for(dosIndex = unoIndex+1; dosIndex < longi; dosIndex++){
-                        boards[3] = cartas[unoIndex];
-                        boards[4] = cartas[dosIndex];
-                        //arrayBoards.add(boards);
-                        //analisis
-                        for(int u = 0 ; u < jugConCartas.length;u++){
-                            jugConCartas[u].combinaCartasDeManoConComunes2(boards); //System.out.println(its);
-                        }
-                        juegos++;
+                for(int i = 0; i < 180000; i++){//son 178365 posibilidades, aprox 180000
+                    Carta cartasJug [] = baraja.generaJugada(2);//cartas para la banca
+                    jugConCartas[1].setCartas(cartasJug[0].getDenominacion()+cartasJug[1].getDenominacion());
+                    Carta[] aux = baraja.generaJugada(2);//cartas board
+                    boards[3] = aux[0];
+                    boards[4] = aux[1];
+                    //arrayBoards.add(boards);
+                    //analisis
+                    for(int u = 0 ; u < jugConCartas.length;u++){
+                        jugConCartas[u].combinaCartasDeManoConComunes2(boards); //System.out.println(its);
+                    }
+                    juegos++;
 
-                         merge.iniciaEmpatados();
-                         Jugador jugOrdenados []= merge.mergeSort(jugConCartasCopy);
-                         tamEmpatados =  merge.dameEmpatados().size();
-                        if(merge.estaJugadorEmpatadoEnLaLista(jugOrdenados[jugOrdenados.length-1].getId())){
-                            for(int z = 0; z < tamEmpatados;z++)
-                            {
-                                puntos[jugOrdenados[jugOrdenados.length-1-z].getId()] += (1.0d/(double) tamEmpatados);
-                            }
-                        }
-                        else{
-                            puntos[jugOrdenados[jugOrdenados.length-1].getId()] += 1.0;
+                     merge.iniciaEmpatados();
+                     Jugador jugOrdenados []= merge.mergeSort(jugConCartasCopy);
+                     tamEmpatados =  merge.dameEmpatados().size();
+                    if(merge.estaJugadorEmpatadoEnLaLista(jugOrdenados[jugOrdenados.length-1].getId())){
+                        for(int z = 0; z < tamEmpatados;z++)
+                        {
+                            puntos[jugOrdenados[jugOrdenados.length-1-z].getId()] += (1.0d/(double) tamEmpatados);
                         }
                     }
+                    else{
+                        puntos[jugOrdenados[jugOrdenados.length-1].getId()] += 1.0;
+                    }
+                    //liberamos cartas
+                    baraja.deshabilitarCarta(jugConCartas[1].getCartas()[0].getDenominacion());
+                    baraja.deshabilitarCarta(jugConCartas[1].getCartas()[1].getDenominacion());
+                    baraja.deshabilitarCarta(boards[3].getDenominacion());
+                    baraja.deshabilitarCarta(boards[4].getDenominacion());
                 }
             }
             else if(board.length()>= 8 && board.length() < 10){
@@ -132,8 +138,11 @@ public class Equity
                 boards[1] = cartasBoard[1];
                 boards[2] = cartasBoard[2];
                 boards[3] = cartasBoard[3];
-                for(unoIndex = 0; unoIndex < longi; unoIndex++){
-                    boards[4] = cartas[unoIndex];
+                for(int i = 0; i < 16000; i++){//son 15180 posibilidades, aprox 16000
+                    Carta cartasJug [] = baraja.generaJugada(2);//cartas para la banca
+                    jugConCartas[1].setCartas(cartasJug[0].getDenominacion()+cartasJug[1].getDenominacion());
+                    Carta[] aux = baraja.generaJugada(1);//cartas board
+                    boards[4] = aux[0];
                     //analisis
                     for(int u = 0 ; u < jugConCartas.length;u++){
                         jugConCartas[u].combinaCartasDeManoConComunes2(boards); //System.out.println(its);
@@ -153,6 +162,10 @@ public class Equity
                     else{
                         puntos[jugOrdenados[jugOrdenados.length-1].getId()] += 1.0;
                     }
+                    //liberamos cartas
+                    baraja.deshabilitarCarta(jugConCartas[1].getCartas()[0].getDenominacion());
+                    baraja.deshabilitarCarta(jugConCartas[1].getCartas()[1].getDenominacion());
+                    baraja.deshabilitarCarta(boards[4].getDenominacion());
                 }
             }
             else{
@@ -161,6 +174,42 @@ public class Equity
                 boards[2] = cartasBoard[2];
                 boards[3] = cartasBoard[3];
                 boards[4] = cartasBoard[4];
+                for(int i = 0; i < 1000; i++){//son 990 posibilidades, aprox 1000
+                    Carta cartasJug [] = baraja.generaJugada(2);//cartas para la banca
+                    jugConCartas[1].setCartas(cartasJug[0].getDenominacion()+cartasJug[1].getDenominacion());
+                    
+                    for(int u = 0 ; u < jugConCartas.length;u++){
+                        jugConCartas[u].combinaCartasDeManoConComunes2(boards);
+                    }
+                    juegos++;
+
+                    merge.iniciaEmpatados();
+                    Jugador jugOrdenados []= merge.mergeSort(jugConCartasCopy);
+                    tamEmpatados =  merge.dameEmpatados().size();
+                    if(merge.estaJugadorEmpatadoEnLaLista(jugOrdenados[jugOrdenados.length-1].getId())){
+                       for(int z = 0; z < tamEmpatados;z++){
+                           puntos[jugOrdenados[jugOrdenados.length-1-z].getId()] += (1.0d/(double) tamEmpatados);
+                        }
+                    }
+                    else{
+                        puntos[jugOrdenados[jugOrdenados.length-1].getId()] += 1.0;
+                    }
+                    //liberamos cartas
+                    baraja.deshabilitarCarta(jugConCartas[1].getCartas()[0].getDenominacion());
+                    baraja.deshabilitarCarta(jugConCartas[1].getCartas()[1].getDenominacion());
+                }
+            }
+
+        }
+        else{   //random nuevo
+            for(int i = 0; i < 200000; i++){
+                if(i%100000==0){
+                    System.out.println(i);
+                }
+                Carta cartasJug [] = baraja.generaJugada(2);//cartas para la banca
+                jugConCartas[1].setCartas(cartasJug[0].getDenominacion()+cartasJug[1].getDenominacion());
+                boards = baraja.generaJugada(5);//cartas board
+                //analisis
                 for(int u = 0 ; u < jugConCartas.length;u++){
                     jugConCartas[u].combinaCartasDeManoConComunes2(boards); //System.out.println(its);
                 }
@@ -170,50 +219,26 @@ public class Equity
                 Jugador jugOrdenados []= merge.mergeSort(jugConCartasCopy);
                 tamEmpatados =  merge.dameEmpatados().size();
                 if(merge.estaJugadorEmpatadoEnLaLista(jugOrdenados[jugOrdenados.length-1].getId())){
-                   for(int z = 0; z < tamEmpatados;z++){
-                       puntos[jugOrdenados[jugOrdenados.length-1-z].getId()] += (1.0d/(double) tamEmpatados);
+
+                    for(int z = 0; z < tamEmpatados;z++)
+                    {
+                        puntos[jugOrdenados[jugOrdenados.length-1-z].getId()] += (1.0d/(double) tamEmpatados);
                     }
                 }
                 else{
                     puntos[jugOrdenados[jugOrdenados.length-1].getId()] += 1.0;
                 }
+                
+                //liberamos cartas
+                baraja.deshabilitarCarta(jugConCartas[1].getCartas()[0].getDenominacion());
+                baraja.deshabilitarCarta(jugConCartas[1].getCartas()[1].getDenominacion());
+                baraja.deshabilitarCarta(boards[0].getDenominacion());
+                baraja.deshabilitarCarta(boards[1].getDenominacion());
+                baraja.deshabilitarCarta(boards[2].getDenominacion());
+                baraja.deshabilitarCarta(boards[3].getDenominacion());
+                baraja.deshabilitarCarta(boards[4].getDenominacion());
             }
-
-        }
-        else
-        {
-            //random nuevo
-            for(unoIndex = 0; unoIndex < longi-4; unoIndex++){
-                for(dosIndex = unoIndex+1; dosIndex < longi-3; dosIndex++){
-                    for(tresIndex = dosIndex+1; tresIndex < longi-2; tresIndex++){
-                        for(cuatroIndex = tresIndex+1; cuatroIndex < longi-1; cuatroIndex++){
-                            for(cincoIndex = cuatroIndex+1; cincoIndex < longi; cincoIndex++){
-                                boards[0] = cartas[unoIndex];
-                                boards[1] = cartas[dosIndex];
-                                boards[2] = cartas[tresIndex];
-                                boards[3] = cartas[cuatroIndex];
-                                boards[4] = cartas[cincoIndex];
-                                //analisis
-                                for(int u = 0 ; u < jugConCartas.length;u++){
-                                    jugConCartas[u].combinaCartasDeManoConComunes2(boards); //System.out.println(its);
-                                }
-                                juegos++;
-                                merge.iniciaEmpatados();
-                                Jugador jugOrdenados []= merge.mergeSort(jugConCartasCopy);
-                                tamEmpatados =  merge.dameEmpatados().size();
-                                if(merge.estaJugadorEmpatadoEnLaLista(jugOrdenados[jugOrdenados.length-1].getId())){
-                                    for(int z = 0; z < tamEmpatados;z++){
-                                        puntos[jugOrdenados[jugOrdenados.length-1-z].getId()] += (1.0d/(double) tamEmpatados);
-                                   }
-                               }
-                               else{
-                                    puntos[jugOrdenados[jugOrdenados.length-1].getId()] += 1.0;
-                               }
-                            }
-                        }    
-                    }
-                }
-            }
+            
         }
 
         for(int u = 0 ; u < jugConCartas.length;u++)
@@ -224,7 +249,7 @@ public class Equity
 
         v.reiniciaEquity();
 
-        equity = Math.round(((puntos[0]/(juegos))*100)*Math.pow(10,3))/Math.pow(10,3);
+        equity = Math.round(((puntos[1]/(juegos))*100)*Math.pow(10,3))/Math.pow(10,3);
         v.setEquity(equity);
         return equity;
     }

@@ -471,31 +471,6 @@ public class PokerCaribean extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btApostarActionPerformed
 
-    public String[] getRangos()
-    {
-        String [] rangos = new String[10];
-        rangos[0] = jugador.getCarta1().getDenominacion()+jugador.getCarta2().getDenominacion();
-        rangos[1] = banca.getCarta1().getDenominacion()+banca.getCarta2().getDenominacion();
-        /*
-        String rang = "";
-        for(int i = 0; i < rangos.length;i++)
-        {
-            if(!rangos[i].equalsIgnoreCase(""))
-            {
-                if(rang.length() == 0)
-                {
-                    rang =  rangos[i];
-                }
-                else
-                {
-                    rang = rang + Constantes.PATRON_SEPARACION + rangos[i];
-                }
-            }
-        }
-        System.out.println("Rango " + rang);
-        return rang.split(Constantes.PATRON_SEPARACION);*/
-        return rangos;
-    }
     private void analizarShowDown(){
         //analizar showdown
         for(int i = 0; i < 5; i++){
@@ -766,7 +741,6 @@ public class PokerCaribean extends javax.swing.JFrame {
 
     private void jbManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbManualActionPerformed
         // TODO add your handling code here:
-        /*
         Equity equity;
         double e;
         equity = new Equity();
@@ -774,7 +748,7 @@ public class PokerCaribean extends javax.swing.JFrame {
         if(jugador.getDinero() < 5){
             JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
                "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+        }
         else{
             resetearCartas();
             board = new Carta[5];
@@ -782,38 +756,38 @@ public class PokerCaribean extends javax.swing.JFrame {
             dineroApuesta ++;
 
             //banca
-            aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(2)));
+            aux = baraja.generaJugada(2);
             cartasB[0] = aux[0];
             cartasB[1] = aux[1];
             banca.setCarta1(cartasB[0]);
             banca.setCarta2(cartasB[1]);
 
             //jugador
-            aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(2)));
+            aux = baraja.generaJugada(2);
             cartasJ[0] = aux[0];
             cartasJ[1] = aux[1];
             jugador.setCarta1(cartasJ[0]);
             jugador.setCarta2(cartasJ[1]);
             cartasUsuario[0].setImagen("/resources/" + jugador.getCarta1().getDenominacion()+ ".png");
             cartasUsuario[1].setImagen("/resources/" + jugador.getCarta2().getDenominacion()+ ".png");
-                    
-
-            baraja.deshabilitarCarta(cartasB[0].getDenominacion());
-            baraja.deshabilitarCarta(cartasB[1].getDenominacion());
 
             tfDineroApostado.setText(Integer.toString(dineroApuesta));
             tfMiStack.setText(Integer.toString(jugador.getDinero()));
 
             //mano
             e = equity.calculaEquity();
-            if(e < (4/9))
+            this.repaint();
+            if(e < 44.44){//44.44 es 4/9
                 btRetirarseActionPerformed(evt);
+                JOptionPane.showMessageDialog(this, "Te retiras." + '\n' +
+               "Tiras tus cartas segun te las dan.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
             else{
                 //flop
                 jugador.sacarCredito(2);
                 dineroApuesta+=2;
                 //generar tres cartas aleatorias para flop
-                aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(3)));
+                aux = baraja.generaJugada(3);
                 for(int j = 0; j < 3; j++){
                     board[j] = aux[j];
                     cartasComunes[j].setImagen("/resources/" + board[j].getDenominacion()+ ".png");
@@ -821,28 +795,36 @@ public class PokerCaribean extends javax.swing.JFrame {
                 tfDineroApostado.setText(Integer.toString(dineroApuesta));
                 tfMiStack.setText(Integer.toString(jugador.getDinero()));
                 e = equity.calculaEquity();
-                if(e < (2/9))
+                this.repaint();
+                if(e < 22.22){//22.22 es 2/9
                     btRetirarseActionPerformed(evt);
+                    JOptionPane.showMessageDialog(this, "Te retiras." + '\n' +
+                    "Tiras tus cartas en el flop.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                }
                 else{
                     //turn
                     jugador.sacarCredito(1);
                     dineroApuesta++;
                     //generar carta aleatoria para turn
-                    aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(1)));
+                    aux = baraja.generaJugada(1);
                     board[3] = aux[0];
                     cartasComunes[3].setImagen("/resources/" + board[3].getDenominacion()+ ".png");
                     tfDineroApostado.setText(Integer.toString(dineroApuesta));
                     tfMiStack.setText(Integer.toString(jugador.getDinero()));
                     e = equity.calculaEquity();
-                    if(e < (1/9))
+                    this.repaint();
+                    if(e < 11.11){//11.11 es 1/9
                         btRetirarseActionPerformed(evt);
+                        JOptionPane.showMessageDialog(this, "Te retiras." + '\n' +
+                        "Tiras tus cartas en el turn.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    }
                     else{
                         jugador.sacarCredito(1);
                         dineroApuesta++;
                         tfDineroApostado.setText(Integer.toString(dineroApuesta));
                         tfMiStack.setText(Integer.toString(jugador.getDinero()));
                         //generar carta aleatoria para river
-                        aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(1)));
+                        aux = baraja.generaJugada(1);
                         board[4] = aux[0];cartasComunes[4].setImagen("/resources/" + board[4].getDenominacion()+ ".png");
                         //mostrar cartas banca
                         cartasBanca[0].setImagen("/resources/" + banca.getCarta1().getDenominacion() + ".png");
@@ -853,31 +835,6 @@ public class PokerCaribean extends javax.swing.JFrame {
                     }
                 }
             }
-        }*/
-        lbJugador.setText("");
-        lbBanca.setText("");
-        jLabel5.setVisible(false);
-        jLabel6.setVisible(false);
-        jLabel6.setText("");
-        jLabel7.setVisible(false);
-        
-        btApostar.setText("Empezar");
-        dineroApuesta = 0;
-        tfResultado.setText("");
-        tfDineroApostado.setText(Integer.toString(dineroApuesta));
-        resetearCartas();
-        if(jugador.getDinero() >= 5)
-        {
-         btApostarActionPerformed(evt) ;
-         btApostarActionPerformed(evt) ;
-         btApostarActionPerformed(evt) ;
-         btApostarActionPerformed(evt) ;
-        }
-        else
-        {
-             JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
-                   "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
-              
         }
     }//GEN-LAST:event_jbManualActionPerformed
 
@@ -943,7 +900,8 @@ public class PokerCaribean extends javax.swing.JFrame {
         //ponemos reverso
         baraja.reset();
         for(int i = 0; i < 5;i++)
-            cartasComunes[i].setImagen("/resources/reverso.JPG"); 
+            cartasComunes[i].setImagen("/resources/reverso.JPG");
+        
         cartasUsuario[0].setImagen("/resources/reverso.JPG");
         cartasUsuario[1].setImagen("/resources/reverso.JPG");
         cartasBanca[0].setImagen("/resources/reverso.JPG");
