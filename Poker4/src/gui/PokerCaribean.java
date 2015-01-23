@@ -744,19 +744,28 @@ public class PokerCaribean extends javax.swing.JFrame {
         Equity equity;
         double e;
         equity = new Equity();
-        
+        String cartasOriginalesBoard = "";
+         String cartasOriginalesBanca = "";
+          String cartasOriginalesJugador = "";
         if(jugador.getDinero() < 5){
             JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
                "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else{
             resetearCartas();
+            System.out.println("se resetean las cartas");
+            baraja.cuantasDisponiblesHay();
             board = new Carta[5];
             jugador.sacarCredito(1);
             dineroApuesta ++;
 
             //banca
             aux = baraja.generaJugada(2);
+            System.out.println("se genera la banca");
+            //guardamos las cartas de la banca
+            
+            cartasOriginalesBanca=  aux[0].getDenominacion()+aux[1].getDenominacion();
+            baraja.cuantasDisponiblesHay();
             cartasB[0] = aux[0];
             cartasB[1] = aux[1];
             banca.setCarta1(cartasB[0]);
@@ -764,6 +773,9 @@ public class PokerCaribean extends javax.swing.JFrame {
 
             //jugador
             aux = baraja.generaJugada(2);
+            cartasOriginalesJugador=  aux[0].getDenominacion()+aux[1].getDenominacion();
+            System.out.println("se genera el jugador");
+            baraja.cuantasDisponiblesHay();
             cartasJ[0] = aux[0];
             cartasJ[1] = aux[1];
             jugador.setCarta1(cartasJ[0]);
@@ -775,6 +787,9 @@ public class PokerCaribean extends javax.swing.JFrame {
             tfMiStack.setText(Integer.toString(jugador.getDinero()));
 
             //mano
+            
+            //para despues ponerlas a false y que no se repitan
+            
             e = equity.calculaEquity();
             this.repaint();
             if(e < 44.44){//44.44 es 4/9
@@ -786,8 +801,21 @@ public class PokerCaribean extends javax.swing.JFrame {
                 //flop
                 jugador.sacarCredito(2);
                 dineroApuesta+=2;
+                
+                //ponemos a false las cartas de la banca y el jugador
+                aux = baraja.generaCartasConString(cartasOriginalesJugador);
+                aux[0].setDisponible(false);
+                aux[1].setDisponible(false);
+                
+                aux = baraja.generaCartasConString(cartasOriginalesBanca);
+                aux[0].setDisponible(false);
+                aux[1].setDisponible(false);
                 //generar tres cartas aleatorias para flop
+                
                 aux = baraja.generaJugada(3);
+                cartasOriginalesBoard = aux[0].getDenominacion()+aux[1].getDenominacion()+aux[2].getDenominacion();
+                System.out.println("se genera el flop");
+            baraja.cuantasDisponiblesHay();
                 for(int j = 0; j < 3; j++){
                     board[j] = aux[j];
                     cartasComunes[j].setImagen("/resources/" + board[j].getDenominacion()+ ".png");
@@ -805,8 +833,25 @@ public class PokerCaribean extends javax.swing.JFrame {
                     //turn
                     jugador.sacarCredito(1);
                     dineroApuesta++;
+                    //ponemos a false las cartas de la banca y el jugador y del board
+                    aux = baraja.generaCartasConString(cartasOriginalesJugador);
+                    aux[0].setDisponible(false);
+                    aux[1].setDisponible(false);
+
+                    aux = baraja.generaCartasConString(cartasOriginalesBanca);
+                    aux[0].setDisponible(false);
+                    aux[1].setDisponible(false);
+                    
+                    aux = baraja.generaCartasConString(cartasOriginalesBoard);
+                    aux[0].setDisponible(false);
+                    aux[1].setDisponible(false);
+                    aux[2].setDisponible(false);
                     //generar carta aleatoria para turn
+                    
                     aux = baraja.generaJugada(1);
+                    cartasOriginalesBoard= cartasOriginalesBoard + aux[0].getDenominacion();
+                    System.out.println("se genera el turn");
+            baraja.cuantasDisponiblesHay();
                     board[3] = aux[0];
                     cartasComunes[3].setImagen("/resources/" + board[3].getDenominacion()+ ".png");
                     tfDineroApostado.setText(Integer.toString(dineroApuesta));
@@ -824,7 +869,22 @@ public class PokerCaribean extends javax.swing.JFrame {
                         tfDineroApostado.setText(Integer.toString(dineroApuesta));
                         tfMiStack.setText(Integer.toString(jugador.getDinero()));
                         //generar carta aleatoria para river
+                        aux = baraja.generaCartasConString(cartasOriginalesJugador);
+                        aux[0].setDisponible(false);
+                        aux[1].setDisponible(false);
+
+                        aux = baraja.generaCartasConString(cartasOriginalesBanca);
+                        aux[0].setDisponible(false);
+                        aux[1].setDisponible(false);
+
+                        aux = baraja.generaCartasConString(cartasOriginalesBoard);
+                        aux[0].setDisponible(false);
+                        aux[1].setDisponible(false);
+                        aux[2].setDisponible(false);
+                        aux[3].setDisponible(false);
                         aux = baraja.generaJugada(1);
+                        System.out.println("se genera el river");
+            baraja.cuantasDisponiblesHay();
                         board[4] = aux[0];cartasComunes[4].setImagen("/resources/" + board[4].getDenominacion()+ ".png");
                         //mostrar cartas banca
                         cartasBanca[0].setImagen("/resources/" + banca.getCarta1().getDenominacion() + ".png");
@@ -836,6 +896,7 @@ public class PokerCaribean extends javax.swing.JFrame {
                 }
             }
         }
+        baraja.reset();
     }//GEN-LAST:event_jbManualActionPerformed
 
     public void setDinero(){
