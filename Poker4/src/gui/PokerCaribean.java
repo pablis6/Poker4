@@ -41,6 +41,9 @@ public class PokerCaribean extends javax.swing.JFrame {
     private String nombreJugadaBanca;
     private String nombreJugadaJ;
     static PokerCaribean instance;
+    private double equityPreFlop;
+    private double equityFlop;
+    private double equityTurn;
     /**
      * Creates new form pokerCaribean
      */
@@ -61,6 +64,9 @@ public class PokerCaribean extends javax.swing.JFrame {
         va = new ValorMano();
         parser = new ParserJugada();
         
+        equityPreFlop = (4.d/9.d)*100;
+        equityFlop = (2.d/9.d)*100;
+        equityTurn = (1.d/9.d)*100;
         int ancho = 65;
         int alto = 104;
         int x = this.getWidth()/2 - (ancho*4);
@@ -176,6 +182,14 @@ public class PokerCaribean extends javax.swing.JFrame {
         tfEquity = new javax.swing.JTextField();
         tfNumJugadas = new javax.swing.JTextField();
         jbManual = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        tfPreflop = new javax.swing.JTextField();
+        tfFlop = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        tfTurn = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        btGuardar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmSalir = new javax.swing.JMenu();
         jmRecargarSaldo = new javax.swing.JMenu();
@@ -261,6 +275,21 @@ public class PokerCaribean extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Introduzca los porcentajes minimos de equity para estrategia personalizada");
+
+        jLabel2.setText("pre-flop");
+
+        jLabel8.setText("flop");
+
+        jLabel9.setText("turn");
+
+        btGuardar.setText("guardar");
+        btGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btGuardarActionPerformed(evt);
+            }
+        });
+
         jmSalir.setText("Salir");
         jMenuBar1.add(jmSalir);
 
@@ -269,9 +298,9 @@ public class PokerCaribean extends javax.swing.JFrame {
             public void menuSelected(javax.swing.event.MenuEvent evt) {
                 jmRecargarSaldoMenuSelected(evt);
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
         jMenuBar1.add(jmRecargarSaldo);
@@ -286,104 +315,140 @@ public class PokerCaribean extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(tfEquity, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jbManual)
+                                .addGap(37, 37, 37)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel7))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(lblEmpatado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lblApuestas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lblGanado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lblPerdido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lblStack, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(tfNumJugadas, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btAuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btRetirarse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btApostar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(tfDineroApostado)
+                                            .addComponent(tfMiStack)
+                                            .addComponent(tfGanados)
+                                            .addComponent(tfPerdidos)
+                                            .addComponent(tfEmpatadas, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(52, 52, 52))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35))))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbManual)
-                        .addGap(243, 243, 243))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfPreflop, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfFlop, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfTurn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btGuardar)
+                                .addGap(35, 35, 35)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbBanca, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(tfEquity, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7))
-                    .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(lblEmpatado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblApuestas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblGanado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblPerdido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblStack, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tfNumJugadas, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btAuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btRetirarse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btApostar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfDineroApostado)
-                            .addComponent(tfMiStack)
-                            .addComponent(tfGanados)
-                            .addComponent(tfPerdidos)
-                            .addComponent(tfEmpatadas, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))))
-                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbBanca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel5))
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEmpatado)
-                    .addComponent(tfEmpatadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfPerdidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPerdido))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfGanados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblGanado))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfDineroApostado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblApuestas))
-                .addGap(18, 18, 18)
-                .addComponent(btApostar)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btRetirarse)
-                    .addComponent(tfEquity, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfMiStack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblStack))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lbBanca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tfEquity, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5))
                         .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lbJugador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEmpatado)
+                            .addComponent(tfEmpatadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfPerdidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPerdido))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfGanados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblGanado))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfDineroApostado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblApuestas))
+                        .addGap(18, 18, 18)
+                        .addComponent(btApostar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btRetirarse)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfMiStack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblStack))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btAuto)
                             .addComponent(tfNumJugadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbManual))))
-                .addGap(17, 17, 17))
+                            .addComponent(jbManual))
+                        .addGap(37, 37, 37)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbJugador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(tfPreflop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(tfFlop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9)
+                                    .addComponent(tfTurn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btGuardar))))
+                .addGap(59, 59, 59))
         );
 
         pack();
@@ -570,6 +635,7 @@ public class PokerCaribean extends javax.swing.JFrame {
         
         lbJugador.setText("");
         lbBanca.setText("");
+        tfEquity.setText("");
         jLabel5.setVisible(false);
         jLabel6.setVisible(false);
         jLabel6.setText("");
@@ -693,7 +759,7 @@ public class PokerCaribean extends javax.swing.JFrame {
 
                 //mano
                 e = equity.calculaEquity();
-                if(e < (4/9))
+                if(e < equityPreFlop)
                     btRetirarseActionPerformed(evt);
                 else{
                     //flop
@@ -707,7 +773,7 @@ public class PokerCaribean extends javax.swing.JFrame {
                     tfDineroApostado.setText(Integer.toString(dineroApuesta));
                     tfMiStack.setText(Integer.toString(jugador.getDinero()));
                     e = equity.calculaEquity();
-                    if(e < (2/9))
+                    if(e < equityFlop)
                         btRetirarseActionPerformed(evt);
                     else{
                         //turn
@@ -720,7 +786,7 @@ public class PokerCaribean extends javax.swing.JFrame {
                         tfDineroApostado.setText(Integer.toString(dineroApuesta));
                         tfMiStack.setText(Integer.toString(jugador.getDinero()));
                         e = equity.calculaEquity();
-                        if(e < (1/9))
+                        if(e < equityTurn)
                             btRetirarseActionPerformed(evt);
                         else{
                             jugador.sacarCredito(1);
@@ -753,19 +819,15 @@ public class PokerCaribean extends javax.swing.JFrame {
         }
         else{
             resetearCartas();
-            System.out.println("se resetean las cartas");
-            baraja.cuantasDisponiblesHay();
             board = new Carta[5];
             jugador.sacarCredito(1);
             dineroApuesta ++;
 
             //banca
             aux = baraja.generaJugada(2);
-            System.out.println("se genera la banca");
             //guardamos las cartas de la banca
             
             cartasOriginalesBanca=  aux[0].getDenominacion()+aux[1].getDenominacion();
-            baraja.cuantasDisponiblesHay();
             cartasB[0] = aux[0];
             cartasB[1] = aux[1];
             banca.setCarta1(cartasB[0]);
@@ -774,8 +836,7 @@ public class PokerCaribean extends javax.swing.JFrame {
             //jugador
             aux = baraja.generaJugada(2);
             cartasOriginalesJugador=  aux[0].getDenominacion()+aux[1].getDenominacion();
-            System.out.println("se genera el jugador");
-            baraja.cuantasDisponiblesHay();
+            
             cartasJ[0] = aux[0];
             cartasJ[1] = aux[1];
             jugador.setCarta1(cartasJ[0]);
@@ -787,15 +848,21 @@ public class PokerCaribean extends javax.swing.JFrame {
             tfMiStack.setText(Integer.toString(jugador.getDinero()));
 
             //mano
-            
+            tfEquity.setText("se genera el pre-flop , (calculando equity)");
+            this.update(this.getGraphics());
             //para despues ponerlas a false y que no se repitan
             
-            e = equity.calculaEquity();
-            this.repaint();
-            if(e < 44.44){//44.44 es 4/9
-                btRetirarseActionPerformed(evt);
+            
+                    e = equity.calculaEquity();
+                    tfEquity.setText("Tienes " + e + " % de equity en el pre-flop"); 
+                  
+            this.update(this.getGraphics());
+            
+            if(e < equityPreFlop){//44.44 es 4/9
+                
                 JOptionPane.showMessageDialog(this, "Te retiras." + '\n' +
                "Tiras tus cartas segun te las dan.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                btRetirarseActionPerformed(evt);
             }
             else{
                 //flop
@@ -814,20 +881,22 @@ public class PokerCaribean extends javax.swing.JFrame {
                 
                 aux = baraja.generaJugada(3);
                 cartasOriginalesBoard = aux[0].getDenominacion()+aux[1].getDenominacion()+aux[2].getDenominacion();
-                System.out.println("se genera el flop");
-            baraja.cuantasDisponiblesHay();
+                
                 for(int j = 0; j < 3; j++){
                     board[j] = aux[j];
                     cartasComunes[j].setImagen("/resources/" + board[j].getDenominacion()+ ".png");
                 }
                 tfDineroApostado.setText(Integer.toString(dineroApuesta));
                 tfMiStack.setText(Integer.toString(jugador.getDinero()));
-                e = equity.calculaEquity();
-                this.repaint();
-                if(e < 22.22){//22.22 es 2/9
-                    btRetirarseActionPerformed(evt);
+                tfEquity.setText("se genera el flop , (calculando equity)");
+                    e = equity.calculaEquity();
+                    tfEquity.setText("Tienes " + e + " % de equity en el flop"); 
+                this.update(this.getGraphics());
+                if(e < equityFlop){//22.22 es 2/9
+                    
                     JOptionPane.showMessageDialog(this, "Te retiras." + '\n' +
                     "Tiras tus cartas en el flop.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    btRetirarseActionPerformed(evt);
                 }
                 else{
                     //turn
@@ -850,18 +919,20 @@ public class PokerCaribean extends javax.swing.JFrame {
                     
                     aux = baraja.generaJugada(1);
                     cartasOriginalesBoard= cartasOriginalesBoard + aux[0].getDenominacion();
-                    System.out.println("se genera el turn");
-            baraja.cuantasDisponiblesHay();
+                    
                     board[3] = aux[0];
                     cartasComunes[3].setImagen("/resources/" + board[3].getDenominacion()+ ".png");
                     tfDineroApostado.setText(Integer.toString(dineroApuesta));
                     tfMiStack.setText(Integer.toString(jugador.getDinero()));
+                    tfEquity.setText("se genera el turn , (calculando equity)");
                     e = equity.calculaEquity();
-                    this.repaint();
-                    if(e < 11.11){//11.11 es 1/9
-                        btRetirarseActionPerformed(evt);
+                    tfEquity.setText("Tienes " + e + " % de equity en el turn"); 
+                    this.update(this.getGraphics());
+                    if(e < equityTurn){//11.11 es 1/9
+                        
                         JOptionPane.showMessageDialog(this, "Te retiras." + '\n' +
                         "Tiras tus cartas en el turn.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        btRetirarseActionPerformed(evt);
                     }
                     else{
                         jugador.sacarCredito(1);
@@ -883,8 +954,7 @@ public class PokerCaribean extends javax.swing.JFrame {
                         aux[2].setDisponible(false);
                         aux[3].setDisponible(false);
                         aux = baraja.generaJugada(1);
-                        System.out.println("se genera el river");
-            baraja.cuantasDisponiblesHay();
+                        tfEquity.setText("se genera el river");
                         board[4] = aux[0];cartasComunes[4].setImagen("/resources/" + board[4].getDenominacion()+ ".png");
                         //mostrar cartas banca
                         cartasBanca[0].setImagen("/resources/" + banca.getCarta1().getDenominacion() + ".png");
@@ -892,12 +962,41 @@ public class PokerCaribean extends javax.swing.JFrame {
             
                         //analizar ShowDown
                         analizarShowDown();
+                        this.update(this.getGraphics());
                     }
                 }
             }
         }
         baraja.reset();
+         tfEquity.setText("");
     }//GEN-LAST:event_jbManualActionPerformed
+
+    private void btGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGuardarActionPerformed
+        // TODO add your handling code here:
+        try
+        {
+            
+            if(Double.valueOf(tfPreflop.getText()) >0 && Double.valueOf(tfFlop.getText()) >0 && Double.valueOf(tfTurn.getText()) >0 &&
+                    Double.valueOf(tfPreflop.getText()) <=100 && Double.valueOf(tfFlop.getText()) <=100 && Double.valueOf(tfTurn.getText()) <=100)
+            {
+                equityPreFlop = Double.valueOf(tfPreflop.getText());
+                equityFlop = Double.valueOf(tfFlop.getText());
+                equityTurn = Double.valueOf(tfTurn.getText());
+                JOptionPane.showMessageDialog(this, "porcentajes almacenados", "confirmacion", JOptionPane.INFORMATION_MESSAGE);
+              
+            }
+            else
+            {
+                 JOptionPane.showMessageDialog(this, "introduzca numeros mayores que 0 y menores o iguales a 100 por favor", "Error", JOptionPane.INFORMATION_MESSAGE);
+            
+            }
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this, "introduzca numeros por favor", "Error", JOptionPane.INFORMATION_MESSAGE);
+                       
+        }
+    }//GEN-LAST:event_btGuardarActionPerformed
 
     public void setDinero(){
         tfMiStack.setText(Integer.toString(this.jugador.getDinero()));
@@ -1009,12 +1108,17 @@ public class PokerCaribean extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btApostar;
     private javax.swing.JButton btAuto;
+    private javax.swing.JButton btGuardar;
     private javax.swing.JButton btRetirarse;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JButton jbManual;
@@ -1030,11 +1134,14 @@ public class PokerCaribean extends javax.swing.JFrame {
     private javax.swing.JTextField tfDineroApostado;
     private javax.swing.JTextField tfEmpatadas;
     private javax.swing.JTextField tfEquity;
+    private javax.swing.JTextField tfFlop;
     private javax.swing.JTextField tfGanados;
     private javax.swing.JTextField tfMiStack;
     private javax.swing.JTextField tfNumJugadas;
     private javax.swing.JTextField tfPerdidos;
+    private javax.swing.JTextField tfPreflop;
     private javax.swing.JTextField tfResultado;
+    private javax.swing.JTextField tfTurn;
     // End of variables declaration//GEN-END:variables
 
     public static PokerCaribean getInstance ()

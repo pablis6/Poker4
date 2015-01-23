@@ -96,20 +96,7 @@ public class Baraja
          f*/
    
     }
-    public void cuantasDisponiblesHay()
-    {
-        int k = 0;
-        for(int i = 0; i< 52;i++)
-        {
-            if(baraja[i].getDisponible())
-            {
-                k++;
-            }
-        }
-        System.out.println("hay "+k + " disponibles");
-        
-               
-    }
+    
    public ArrayList<String> dame2cartasDeParejaLibre(String valor)
    {
        ArrayList<String> cartas = new ArrayList<>();

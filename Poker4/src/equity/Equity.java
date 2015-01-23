@@ -203,9 +203,7 @@ public class Equity
         }
         else{   //random nuevo
             for(int i = 0; i < 200000; i++){
-                if(i%100000==0){
-                    System.out.println(i);
-                }
+                
                 Carta cartasJug [] = baraja.generaJugada(2);//cartas para la banca
                 jugConCartas[1].setCartas(cartasJug[0].getDenominacion()+cartasJug[1].getDenominacion());
                 boards = baraja.generaJugada(5);//cartas board
