@@ -14,7 +14,7 @@ import carta.Carta;
 public class Player {
     
     private Carta carta1, carta2;
-    private int dinero, vecesGanadas, vecesPerdidas, vecesEmpatadas;
+    private int dinero, vecesGanadas, vecesPerdidas, vecesEmpatadas, vecesRetiradas;
     
     /*Constructor de Jugador. Inicializa el dinero que posee el jugador
     actual a 0*/
@@ -23,6 +23,7 @@ public class Player {
         this.vecesGanadas = 0;
         this.vecesPerdidas = 0;
         this.vecesEmpatadas = 0;
+        this.vecesRetiradas = 0;
     }
     
     /*Getters y Setters de la clase*/
@@ -82,5 +83,13 @@ public class Player {
     
     public int getEmpatado(){
         return vecesEmpatadas;
+    }
+    
+    public void sumaRetirado(){
+        vecesRetiradas++;
+    }
+    
+    public int getRetirado(){
+        return vecesRetiradas;
     }
 }
