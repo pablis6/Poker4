@@ -272,6 +272,12 @@ public class PokerCaribean extends javax.swing.JFrame {
             }
         });
 
+        tfNumJugadas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfNumJugadasKeyTyped(evt);
+            }
+        });
+
         jbManual.setText("Manual");
         jbManual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -283,7 +289,25 @@ public class PokerCaribean extends javax.swing.JFrame {
 
         jLabel2.setText("pre-flop");
 
+        tfPreflop.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfPreflopKeyTyped(evt);
+            }
+        });
+
+        tfFlop.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfFlopKeyTyped(evt);
+            }
+        });
+
         jLabel8.setText("flop");
+
+        tfTurn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfTurnKeyTyped(evt);
+            }
+        });
 
         jLabel9.setText("turn");
 
@@ -318,12 +342,12 @@ public class PokerCaribean extends javax.swing.JFrame {
 
         jmRecargarSaldo.setText("Añadir dinero");
         jmRecargarSaldo.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                jmRecargarSaldoMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jmRecargarSaldoMenuSelected(evt);
             }
         });
         jMenuBar1.add(jmRecargarSaldo);
@@ -369,7 +393,7 @@ public class PokerCaribean extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(btAuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btRetirarse, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                                            .addComponent(btRetirarse, javax.swing.GroupLayout.PREFERRED_SIZE, 74, Short.MAX_VALUE)
                                             .addComponent(btApostar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(tfDineroApostado)
                                             .addComponent(tfMiStack)
@@ -1169,6 +1193,38 @@ public class PokerCaribean extends javax.swing.JFrame {
                        
         }
     }//GEN-LAST:event_btGuardarActionPerformed
+
+    private void tfNumJugadasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNumJugadasKeyTyped
+        // TODO add your handling code here:
+        char aux = evt.getKeyChar();
+        if(aux < '0' || aux > '9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfNumJugadasKeyTyped
+
+    private void tfPreflopKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPreflopKeyTyped
+        // TODO add your handling code here:
+        char aux = evt.getKeyChar();
+        if(aux < '0' || aux > '9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfPreflopKeyTyped
+
+    private void tfFlopKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFlopKeyTyped
+        // TODO add your handling code here:
+        char aux = evt.getKeyChar();
+        if(aux < '0' || aux > '9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfFlopKeyTyped
+
+    private void tfTurnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTurnKeyTyped
+        // TODO add your handling code here:
+        char aux = evt.getKeyChar();
+        if(aux < '0' || aux > '9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfTurnKeyTyped
 
     public void setDinero(){
         tfMiStack.setText(Integer.toString(this.jugador.getDinero()));

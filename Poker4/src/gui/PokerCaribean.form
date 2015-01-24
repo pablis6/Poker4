@@ -386,6 +386,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfNumJugadas">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfNumJugadasKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbManual">
       <Properties>
@@ -406,8 +409,14 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfPreflop">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfPreflopKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfFlop">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfFlopKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
       <Properties>
@@ -415,6 +424,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfTurn">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfTurnKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
       <Properties>
