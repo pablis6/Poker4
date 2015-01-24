@@ -109,6 +109,7 @@ public class PokerCaribean extends javax.swing.JFrame {
         this.tfPerdidos.setText(Integer.toString(jugador.getPerdido()));
         this.tfEmpatadas.setText(Integer.toString(jugador.getEmpatado()));
         this.tfRetiradas.setText(Integer.toString(jugador.getRetirado()));
+        this.btRetirarse.setEnabled(false);
     }
 
     public void setEquity(double eq)
@@ -490,18 +491,19 @@ public class PokerCaribean extends javax.swing.JFrame {
 
     private void btApostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btApostarActionPerformed
         if(btApostar.getText().equalsIgnoreCase("Empezar")){
-            lbJugador.setText("");
-            lbBanca.setText("");
-            jLabel5.setVisible(false);
-            jLabel6.setVisible(false);
-            jLabel6.setText("");
-            jLabel7.setVisible(false);
-            
             if(jugador.getDinero() < 5){
                 JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
                    "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else{
+                    btRetirarse.setEnabled(true);
+                    lbJugador.setText("");
+                    lbBanca.setText("");
+                    jLabel5.setVisible(false);
+                    jLabel6.setVisible(false);
+                    jLabel6.setText("");
+                    jLabel7.setVisible(false);
+                    
                     resetearCartas();
                     tfResultado.setText("");
                     jugador.sacarCredito(1);
@@ -566,7 +568,8 @@ public class PokerCaribean extends javax.swing.JFrame {
             cartasBanca[0].setImagen("/resources/" + banca.getCarta1().getDenominacion() + ".png");
             cartasBanca[1].setImagen("/resources/" + banca.getCarta2().getDenominacion()+ ".png");
             analizarShowDown();
-            
+            btApostar.setText("Empezar");
+            btRetirarse.setEnabled(false);
         }
     }//GEN-LAST:event_btApostarActionPerformed
 
@@ -658,8 +661,6 @@ public class PokerCaribean extends javax.swing.JFrame {
 
             //reiniciar el contador de dineroApuesta
             dineroApuesta = 0;
-            
-            btApostar.setText("Empezar");
             tfDineroApostado.setText(Integer.toString(dineroApuesta));
             tfMiStack.setText(Integer.toString(jugador.getDinero()));
     }
@@ -761,13 +762,12 @@ public class PokerCaribean extends javax.swing.JFrame {
         Equity equity;
         double e;
         equity = new Equity();
-        
-        for(int i = 0; i < 1; i++){
-            if(jugador.getDinero() < 5){
-                JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
-                   "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            else{
+        if(jugador.getDinero() < 5){
+            JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
+               "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            for(int i = 0; i < 1; i++){
                 resetearCartas();
                 board = new Carta[5];
                 jugador.sacarCredito(1);
