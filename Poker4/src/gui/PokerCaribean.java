@@ -496,6 +496,10 @@ public class PokerCaribean extends javax.swing.JFrame {
                    "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else{
+                    info= "";
+                    taEquity.setText(info);//limpiamos el campo
+                    tfCalculando.setText(info);//limpiamos el campo
+                    
                     btRetirarse.setEnabled(true);
                     lbJugador.setText("");
                     lbBanca.setText("");
@@ -762,81 +766,205 @@ public class PokerCaribean extends javax.swing.JFrame {
         Equity equity;
         double e;
         equity = new Equity();
-        if(jugador.getDinero() < 5){
-            JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
-               "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        String cartasOriginalesBoard;
+        String cartasOriginalesBanca;
+        String cartasOriginalesJugador;
+        if(tfNumJugadas.getText().equals(""))
+            JOptionPane.showMessageDialog(this, "Por favor, introduce un numero de jugadas que ejecutar automaticamente.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         else{
-            for(int i = 0; i < 1; i++){
-                resetearCartas();
-                board = new Carta[5];
-                jugador.sacarCredito(1);
-                dineroApuesta ++;
+            if(jugador.getDinero() < 5){
+                JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
+                   "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+            info= "";
+            taEquity.setText(info);//limpiamos el campo
+            tfCalculando.setText(info);//limpiamos el campo
+                for(int i = 0; i < Integer.parseInt(tfNumJugadas.getText()); i++){
+                    cartasOriginalesBoard = "";
+                    cartasOriginalesBanca = "";
+                    cartasOriginalesJugador = "";
+                    //resetearCartas();
+                    baraja.reset();
+                    board = new Carta[5];
+                    jugador.sacarCredito(1);
+                    dineroApuesta ++;
 
-                //banca
-                aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(2)));
-                cartasB[0] = aux[0];
-                cartasB[1] = aux[1];
-                banca.setCarta1(cartasB[0]);
-                banca.setCarta2(cartasB[1]);
+                    //banca
+                    aux = baraja.generaJugada(2);
+                    //guardamos las cartas de la banca
 
-                //jugador
-                aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(2)));
-                cartasJ[0] = aux[0];
-                cartasJ[1] = aux[1];
-                jugador.setCarta1(cartasJ[0]);
-                jugador.setCarta2(cartasJ[1]);
-                
-                baraja.deshabilitarCarta(cartasB[0].getDenominacion());
-                baraja.deshabilitarCarta(cartasB[1].getDenominacion());
+                    cartasOriginalesBanca=  aux[0].getDenominacion()+aux[1].getDenominacion();
+                    cartasB[0] = aux[0];
+                    cartasB[1] = aux[1];
+                    banca.setCarta1(cartasB[0]);
+                    banca.setCarta2(cartasB[1]);
 
-                tfDineroApostado.setText(Integer.toString(dineroApuesta));
-                tfMiStack.setText(Integer.toString(jugador.getDinero()));
+                    //jugador
+                    aux = baraja.generaJugada(2);
+                    cartasOriginalesJugador=  aux[0].getDenominacion()+aux[1].getDenominacion();
 
-                //mano
-                e = equity.calculaEquity();
-                if(e < equityPreFlop)
-                    btRetirarseActionPerformed(evt);
-                else{
-                    //flop
-                    jugador.sacarCredito(2);
-                    dineroApuesta+=2;
-                    //generar tres cartas aleatorias para flop
-                    aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(3)));
-                    for(int j = 0; j < 3; j++){
-                        board[j] = aux[j];
-                    }
+                    cartasJ[0] = aux[0];
+                    cartasJ[1] = aux[1];
+                    jugador.setCarta1(cartasJ[0]);
+                    jugador.setCarta2(cartasJ[1]);
+
                     tfDineroApostado.setText(Integer.toString(dineroApuesta));
                     tfMiStack.setText(Integer.toString(jugador.getDinero()));
+
+                    //para despues ponerlas a false y que no se repitan
                     e = equity.calculaEquity();
-                    if(e < equityFlop)
+
+                    if(e < equityPreFlop){//44.44 es 4/9
                         btRetirarseActionPerformed(evt);
+                    }
                     else{
-                        //turn
-                        jugador.sacarCredito(1);
-                        dineroApuesta++;
-                        //generar carta aleatoria para turn
-                        aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(1)));
-                        board[3] = aux[0];
-                        
+                        //flop
+                        jugador.sacarCredito(2);
+                        dineroApuesta+=2;
+
+                        //ponemos a false las cartas de la banca y el jugador
+                        aux = baraja.generaCartasConString(cartasOriginalesJugador);
+                        aux[0].setDisponible(false);
+                        aux[1].setDisponible(false);
+
+                        aux = baraja.generaCartasConString(cartasOriginalesBanca);
+                        aux[0].setDisponible(false);
+                        aux[1].setDisponible(false);
+                        //generar tres cartas aleatorias para flop
+
+                        aux = baraja.generaJugada(3);
+                        cartasOriginalesBoard = aux[0].getDenominacion()+aux[1].getDenominacion()+aux[2].getDenominacion();
+
+                        for(int j = 0; j < 3; j++){
+                            board[j] = aux[j];
+                        }
                         tfDineroApostado.setText(Integer.toString(dineroApuesta));
                         tfMiStack.setText(Integer.toString(jugador.getDinero()));
                         e = equity.calculaEquity();
-                        if(e < equityTurn)
+                        if(e < equityFlop){//22.22 es 2/9
                             btRetirarseActionPerformed(evt);
+                        }
                         else{
+                            //turn
                             jugador.sacarCredito(1);
                             dineroApuesta++;
+                            //ponemos a false las cartas de la banca y el jugador y del board
+                            aux = baraja.generaCartasConString(cartasOriginalesJugador);
+                            aux[0].setDisponible(false);
+                            aux[1].setDisponible(false);
+
+                            aux = baraja.generaCartasConString(cartasOriginalesBanca);
+                            aux[0].setDisponible(false);
+                            aux[1].setDisponible(false);
+
+                            aux = baraja.generaCartasConString(cartasOriginalesBoard);
+                            aux[0].setDisponible(false);
+                            aux[1].setDisponible(false);
+                            aux[2].setDisponible(false);
+                            //generar carta aleatoria para turn
+
+                            aux = baraja.generaJugada(1);
+                            cartasOriginalesBoard= cartasOriginalesBoard + aux[0].getDenominacion();
+
+                            board[3] = aux[0];
                             tfDineroApostado.setText(Integer.toString(dineroApuesta));
                             tfMiStack.setText(Integer.toString(jugador.getDinero()));
-                            //generar carta aleatoria para river
-                            aux = baraja.generaCartasConString(baraja.getJugadaString(baraja.generaJugada(1)));
-                            board[4] = aux[0];
-                            //analizar ShowDown
-                            analizarShowDown();
+                            e = equity.calculaEquity();
+                            if(e < equityTurn){//11.11 es 1/9
+                                btRetirarseActionPerformed(evt);
+                            }
+                            else{
+                                jugador.sacarCredito(1);
+                                dineroApuesta++;
+                                tfDineroApostado.setText(Integer.toString(dineroApuesta));
+                                tfMiStack.setText(Integer.toString(jugador.getDinero()));
+                                //generar carta aleatoria para river
+                                aux = baraja.generaCartasConString(cartasOriginalesJugador);
+                                aux[0].setDisponible(false);
+                                aux[1].setDisponible(false);
+
+                                aux = baraja.generaCartasConString(cartasOriginalesBanca);
+                                aux[0].setDisponible(false);
+                                aux[1].setDisponible(false);
+
+                                aux = baraja.generaCartasConString(cartasOriginalesBoard);
+                                aux[0].setDisponible(false);
+                                aux[1].setDisponible(false);
+                                aux[2].setDisponible(false);
+                                aux[3].setDisponible(false);
+                                aux = baraja.generaJugada(1);
+                                board[4] = aux[0];
+                                //analizar ShowDown
+
+                                for(int k = 0; k < 5; k++){
+                                    cartasB[k+2] = board[k];
+                                    cartasJ[k+2] = board[k];
+                                }
+                                MergeSort merge = new MergeSort(2);
+                                merge.iniciaEmpatados();
+
+                                Jugador[] jugadoresConCartas = new Jugador[2];
+                                va = new ValorMano();
+                                jugadoresConCartas[0] = new Jugador(cartasJ,acons.JUGADOR);
+                                jugadoresConCartas[0].setJugada(va.valorarMiMano(cartasJ));
+
+                                va = new ValorMano();
+                                jugadoresConCartas[1] = new Jugador(cartasB,acons.BANCA);
+                                jugadoresConCartas[1].setJugada(va.valorarMiMano(cartasB));
+
+                                Jugador jugConCartasCopy[] = new Jugador[2];
+                                System.arraycopy(jugadoresConCartas, 0, jugConCartasCopy, 0, jugadoresConCartas.length);
+                                Jugador jugOrdenados []= merge.mergeSort(jugConCartasCopy);
+
+                                //SI estan empatados
+                                if(merge.estaJugadorEmpatadoEnLaLista(jugOrdenados[1].getId())){
+                                    ganador=acons.EMPATE;
+                                }
+                                else{
+                                    if (jugOrdenados[1].getId() == acons.BANCA){//gana la banca
+                                        ganador = acons.BANCA;
+                                    }
+                                    else if (jugOrdenados[1].getId() == acons.JUGADOR){//gana el jugador
+                                        ganador = acons.JUGADOR;
+                                        if(jugOrdenados[1].getJugada()[0] == acons.TWO_PAIR_INT || jugOrdenados[1].getJugada()[0] == acons.PAIR_INT || jugOrdenados[1].getJugada()[0] == acons.HIGH_CARD_INT){
+                                            this.menorTrio = true;
+                                        }
+                                        else{
+                                            this.menorTrio = false;
+                                        }
+                                    }
+                                }if(ganador == acons.EMPATE){//empate
+                                        jugador.aniadirCredito(dineroApuesta);
+                                        jugador.sumaEmpatado();
+                                        tfEmpatadas.setText(Integer.toString(jugador.getEmpatado()));
+                                }
+                                else if(ganador == acons.JUGADOR){//gana jugador
+                                    if(this.menorTrio == false){
+                                        jugador.aniadirCredito(dineroApuesta*2);
+                                    }
+                                    else{
+                                        jugador.aniadirCredito((dineroApuesta*2)-1);
+                                    }
+                                    jugador.sumaGanado();
+                                    tfGanados.setText(Integer.toString(jugador.getGanado()));
+                                }
+                                else {
+                                    jugador.sumaPerdido();
+                                    tfPerdidos.setText(Integer.toString(jugador.getPerdido()));
+                                }//gana banca
+
+                                //reiniciar el contador de dineroApuesta
+                                dineroApuesta = 0;
+                                tfDineroApostado.setText(Integer.toString(dineroApuesta));
+                                tfMiStack.setText(Integer.toString(jugador.getDinero()));
+                            }
                         }
                     }
-                }
+                baraja.reset();
+                }    
+                this.update(this.getGraphics());            
             }
         }
     }//GEN-LAST:event_btAutoActionPerformed
@@ -999,7 +1127,8 @@ public class PokerCaribean extends javax.swing.JFrame {
                         aux = baraja.generaJugada(1);
                         tfCalculando.setText("se genera el river");
                         this.update(this.getGraphics());
-                        board[4] = aux[0];cartasComunes[4].setImagen("/resources/" + board[4].getDenominacion()+ ".png");
+                        board[4] = aux[0];
+                        cartasComunes[4].setImagen("/resources/" + board[4].getDenominacion()+ ".png");
                         //mostrar cartas banca
                         cartasBanca[0].setImagen("/resources/" + banca.getCarta1().getDenominacion() + ".png");
                         cartasBanca[1].setImagen("/resources/" + banca.getCarta2().getDenominacion()+ ".png");

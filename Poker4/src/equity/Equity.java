@@ -248,7 +248,7 @@ public class Equity
         v.reiniciaEquity();
 
         equity = Math.round(((puntos[1]/(juegos))*100)*Math.pow(10,3))/Math.pow(10,3);
-        v.setEquity(equity);
+        //v.setEquity(equity);
         return equity;
     }
     
