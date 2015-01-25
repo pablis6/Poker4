@@ -338,16 +338,25 @@ public class PokerCaribean extends javax.swing.JFrame {
         lblRetiradas.setText("Retiradas");
 
         jmSalir.setText("Salir");
+        jmSalir.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jmSalirMenuSelected(evt);
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+        });
         jMenuBar1.add(jmSalir);
 
         jmRecargarSaldo.setText("Añadir dinero");
         jmRecargarSaldo.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jmRecargarSaldoMenuSelected(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                jmRecargarSaldoMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
         jMenuBar1.add(jmRecargarSaldo);
@@ -393,7 +402,7 @@ public class PokerCaribean extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(btAuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btRetirarse, javax.swing.GroupLayout.PREFERRED_SIZE, 74, Short.MAX_VALUE)
+                                            .addComponent(btRetirarse, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                                             .addComponent(btApostar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(tfDineroApostado)
                                             .addComponent(tfMiStack)
@@ -1225,6 +1234,13 @@ public class PokerCaribean extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_tfTurnKeyTyped
+
+    private void jmSalirMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jmSalirMenuSelected
+        // TODO add your handling code here:
+        if(JOptionPane.showConfirmDialog(this, "¿Quieres salir?", "Confirmacion de salida", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_jmSalirMenuSelected
 
     public void setDinero(){
         tfMiStack.setText(Integer.toString(this.jugador.getDinero()));
