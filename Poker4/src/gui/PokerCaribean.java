@@ -51,6 +51,7 @@ public class PokerCaribean extends javax.swing.JFrame {
     private PokerCaribean() {
         
         initComponents();
+        tfResultado.setVisible(true);
         cons = new Constantes();
         acons = new AntiguasConstantes();
         cartasBanca = new JPanelConFondo[2];
@@ -110,6 +111,7 @@ public class PokerCaribean extends javax.swing.JFrame {
         this.tfEmpatadas.setText(Integer.toString(jugador.getEmpatado()));
         this.tfRetiradas.setText(Integer.toString(jugador.getRetirado()));
         this.btRetirarse.setEnabled(false);
+        tfResultado.setVisible(true);
     }
 
     public void setEquity(double eq)
@@ -197,6 +199,7 @@ public class PokerCaribean extends javax.swing.JFrame {
         taEquity = new javax.swing.JTextArea();
         tfRetiradas = new javax.swing.JTextField();
         lblRetiradas = new javax.swing.JLabel();
+        tfsep = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmSalir = new javax.swing.JMenu();
         jmRecargarSaldo = new javax.swing.JMenu();
@@ -337,6 +340,8 @@ public class PokerCaribean extends javax.swing.JFrame {
 
         lblRetiradas.setText("Retiradas");
 
+        tfsep.setText("jTextField1");
+
         jmSalir.setText("Salir");
         jmSalir.addMenuListener(new javax.swing.event.MenuListener() {
             public void menuSelected(javax.swing.event.MenuEvent evt) {
@@ -368,6 +373,49 @@ public class PokerCaribean extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbBanca, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(710, 710, 710)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jbManual)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(tfsep, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(86, 86, 86)))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(lblEmpatado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblApuestas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblGanado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblPerdido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblStack, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfNumJugadas, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblRetiradas))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btAuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btRetirarse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btApostar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfDineroApostado)
+                            .addComponent(tfMiStack)
+                            .addComponent(tfGanados)
+                            .addComponent(tfPerdidos)
+                            .addComponent(tfEmpatadas)
+                            .addComponent(tfRetiradas))))
+                .addGap(52, 52, 52))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -375,42 +423,8 @@ public class PokerCaribean extends javax.swing.JFrame {
                             .addComponent(tfCalculando)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jbManual)
-                                .addGap(37, 37, 37)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel7))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(lblEmpatado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(lblApuestas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(lblGanado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(lblPerdido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(lblStack, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(tfNumJugadas, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lblRetiradas))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(btAuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btRetirarse, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-                                            .addComponent(btApostar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(tfDineroApostado)
-                                            .addComponent(tfMiStack)
-                                            .addComponent(tfGanados)
-                                            .addComponent(tfPerdidos)
-                                            .addComponent(tfEmpatadas)
-                                            .addComponent(tfRetiradas))))
-                                .addGap(52, 52, 52))))
+                        .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -433,24 +447,19 @@ public class PokerCaribean extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btGuardar)
                                 .addGap(35, 35, 35)))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbBanca, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
+                        .addGap(76, 76, 76)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel5)))
+                            .addComponent(jLabel5)
+                            .addComponent(tfsep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -458,7 +467,7 @@ public class PokerCaribean extends javax.swing.JFrame {
                                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lbBanca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(25, 25, 25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfRetiradas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblRetiradas))
@@ -466,7 +475,7 @@ public class PokerCaribean extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfEmpatadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblEmpatado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfPerdidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPerdido))
@@ -796,12 +805,19 @@ public class PokerCaribean extends javax.swing.JFrame {
 
     private void btAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAutoActionPerformed
         // TODO add your handling code here:
+        /*
         Equity equity;
         double e;
         equity = new Equity();
         String cartasOriginalesBoard;
         String cartasOriginalesBanca;
         String cartasOriginalesJugador;
+        int retiradas = Integer.parseInt(tfRetiradas.getText());
+        int ganadas = Integer.parseInt(tfGanados.getText());
+        int empatadas = Integer.parseInt(tfEmpatadas.getText());
+        int perdidas = Integer.parseInt(tfPerdidos.getText());
+        int stack = Integer.parseInt(tfMiStack.getText());
+              
         if(tfNumJugadas.getText().equals(""))
             JOptionPane.showMessageDialog(this, "Por favor, introduce un numero de jugadas que ejecutar automaticamente.",
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -997,8 +1013,233 @@ public class PokerCaribean extends javax.swing.JFrame {
                     }
                 baraja.reset();
                 }    
-                this.update(this.getGraphics());            
+                this.update(this.getGraphics());   
+                if(jugador.getDinero()-stack>=0)
+                {
+                    JOptionPane.showMessageDialog(this, "Ha ganado " + Math.abs((jugador.getDinero()-stack)) + "€\n" 
+                            +"\nGanadas " + Math.abs(ganadas -Integer.parseInt(tfGanados.getText()))
+                            +"\nPerdidas " + Math.abs((perdidas -Integer.parseInt(tfPerdidos.getText())))
+                            +"\nRetiradas " + Math.abs((retiradas -Integer.parseInt(tfRetiradas.getText())))
+                            +"\nEmpatadas " + Math.abs((empatadas -Integer.parseInt(tfEmpatadas.getText())))
+               , "Resumen", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                     JOptionPane.showMessageDialog(this, "Ha perdido " + Math.abs((jugador.getDinero()-stack)) + "€\n" 
+                            +"\nGanadas " + Math.abs(ganadas -Integer.parseInt(tfGanados.getText()))
+                            +"\nPerdidas " + Math.abs((perdidas -Integer.parseInt(tfPerdidos.getText())))
+                            +"\nRetiradas " + Math.abs((retiradas -Integer.parseInt(tfRetiradas.getText())))
+                            +"\nEmpatadas " + Math.abs((empatadas -Integer.parseInt(tfEmpatadas.getText())))
+               , "Resumen", JOptionPane.ERROR_MESSAGE);
+                }
+        
             }
+        }*/
+        Equity equity;
+        double e;
+        equity = new Equity();
+        String cartasOriginalesBoard;
+        String cartasOriginalesBanca;
+        String cartasOriginalesJugador;
+        int retiradas = Integer.parseInt(tfRetiradas.getText());
+        int ganadas = Integer.parseInt(tfGanados.getText());
+        int empatadas = Integer.parseInt(tfEmpatadas.getText());
+        int perdidas = Integer.parseInt(tfPerdidos.getText());
+        int stack = Integer.parseInt(tfMiStack.getText());
+        boolean sinCredito = false;
+        if(jugador.getDinero() < 5){
+                JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
+                   "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+            
+        
+        for(int i = 0; i < Integer.parseInt(tfNumJugadas.getText() )&& !sinCredito; i++)
+        {
+            if(jugador.getDinero() < 5){
+                JOptionPane.showMessageDialog(this, "No tienes saldo suficiente para jugar." + '\n' +
+                   "Por favor, introduce dinero para poder jugar.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+                resetearCartas();
+                board = new Carta[5];
+                jugador.sacarCredito(1);
+                dineroApuesta ++;
+
+                info= "";
+                taEquity.setText(info);//limpiamos el campo
+                tfCalculando.setText(info);//limpiamos el campo
+                this.update(this.getGraphics());
+
+                //banca
+                aux = baraja.generaJugada(2);
+                //guardamos las cartas de la banca
+
+                cartasOriginalesBanca=  aux[0].getDenominacion()+aux[1].getDenominacion();
+                cartasB[0] = aux[0];
+                cartasB[1] = aux[1];
+                banca.setCarta1(cartasB[0]);
+                banca.setCarta2(cartasB[1]);
+
+                //jugador
+                aux = baraja.generaJugada(2);
+                cartasOriginalesJugador=  aux[0].getDenominacion()+aux[1].getDenominacion();
+
+                cartasJ[0] = aux[0];
+                cartasJ[1] = aux[1];
+                jugador.setCarta1(cartasJ[0]);
+                jugador.setCarta2(cartasJ[1]);
+                cartasUsuario[0].setImagen("/resources/" + jugador.getCarta1().getDenominacion()+ ".png");
+                cartasUsuario[1].setImagen("/resources/" + jugador.getCarta2().getDenominacion()+ ".png");
+
+                tfDineroApostado.setText(Integer.toString(dineroApuesta));
+                tfMiStack.setText(Integer.toString(jugador.getDinero()));
+
+                //mano
+                tfCalculando.setText("se genera el pre-flop , (calculando equity)");
+                this.update(this.getGraphics());
+                //para despues ponerlas a false y que no se repitan
+                e = equity.calculaEquity();
+                info +="Tienes " + e + " % de equity en el pre-flop"+ "\n";
+                taEquity.setText(info); 
+
+                this.update(this.getGraphics());
+
+                if(e < equityPreFlop){//44.44 es 4/9
+
+                     btRetirarseActionPerformed(evt);
+                }
+                else{
+                    //flop
+                    jugador.sacarCredito(2);
+                    dineroApuesta+=2;
+
+                    //ponemos a false las cartas de la banca y el jugador
+                    aux = baraja.generaCartasConString(cartasOriginalesJugador);
+                    aux[0].setDisponible(false);
+                    aux[1].setDisponible(false);
+
+                    aux = baraja.generaCartasConString(cartasOriginalesBanca);
+                    aux[0].setDisponible(false);
+                    aux[1].setDisponible(false);
+                    //generar tres cartas aleatorias para flop
+
+                    aux = baraja.generaJugada(3);
+                    cartasOriginalesBoard = aux[0].getDenominacion()+aux[1].getDenominacion()+aux[2].getDenominacion();
+
+                    for(int j = 0; j < 3; j++){
+                        board[j] = aux[j];
+                        cartasComunes[j].setImagen("/resources/" + board[j].getDenominacion()+ ".png");
+                    }
+                    tfDineroApostado.setText(Integer.toString(dineroApuesta));
+                    tfMiStack.setText(Integer.toString(jugador.getDinero()));
+                    tfCalculando.setText("se genera el flop , (calculando equity)");
+                    this.update(this.getGraphics());
+                    e = equity.calculaEquity();
+                    info += "Tienes " + e + " % de equity en el flop"+ "\n";
+                    taEquity.setText(info); 
+                    this.update(this.getGraphics());
+                    if(e < equityFlop){//22.22 es 2/9
+                         btRetirarseActionPerformed(evt);
+                    }
+                    else{
+                        //turn
+                        jugador.sacarCredito(1);
+                        dineroApuesta++;
+                        //ponemos a false las cartas de la banca y el jugador y del board
+                        aux = baraja.generaCartasConString(cartasOriginalesJugador);
+                        aux[0].setDisponible(false);
+                        aux[1].setDisponible(false);
+
+                        aux = baraja.generaCartasConString(cartasOriginalesBanca);
+                        aux[0].setDisponible(false);
+                        aux[1].setDisponible(false);
+
+                        aux = baraja.generaCartasConString(cartasOriginalesBoard);
+                        aux[0].setDisponible(false);
+                        aux[1].setDisponible(false);
+                        aux[2].setDisponible(false);
+                        //generar carta aleatoria para turn
+
+                        aux = baraja.generaJugada(1);
+                        cartasOriginalesBoard= cartasOriginalesBoard + aux[0].getDenominacion();
+
+                        board[3] = aux[0];
+                        cartasComunes[3].setImagen("/resources/" + board[3].getDenominacion()+ ".png");
+                        tfDineroApostado.setText(Integer.toString(dineroApuesta));
+                        tfMiStack.setText(Integer.toString(jugador.getDinero()));
+                        tfCalculando.setText("se genera el turn , (calculando equity)");
+                        this.update(this.getGraphics());
+                        e = equity.calculaEquity();
+                        info += "Tienes " + e + " % de equity en el turn";
+                        taEquity.setText(info); 
+                        this.update(this.getGraphics());
+                        if(e < equityTurn){//11.11 es 1/9
+                             btRetirarseActionPerformed(evt);
+                        }
+                        else{
+                            jugador.sacarCredito(1);
+                            dineroApuesta++;
+                            tfDineroApostado.setText(Integer.toString(dineroApuesta));
+                            tfMiStack.setText(Integer.toString(jugador.getDinero()));
+                            //generar carta aleatoria para river
+                            aux = baraja.generaCartasConString(cartasOriginalesJugador);
+                            aux[0].setDisponible(false);
+                            aux[1].setDisponible(false);
+
+                            aux = baraja.generaCartasConString(cartasOriginalesBanca);
+                            aux[0].setDisponible(false);
+                            aux[1].setDisponible(false);
+
+                            aux = baraja.generaCartasConString(cartasOriginalesBoard);
+                            aux[0].setDisponible(false);
+                            aux[1].setDisponible(false);
+                            aux[2].setDisponible(false);
+                            aux[3].setDisponible(false);
+                            aux = baraja.generaJugada(1);
+                            tfCalculando.setText("se genera el river");
+                            this.update(this.getGraphics());
+                            board[4] = aux[0];
+                            cartasComunes[4].setImagen("/resources/" + board[4].getDenominacion()+ ".png");
+                            //mostrar cartas banca
+                            cartasBanca[0].setImagen("/resources/" + banca.getCarta1().getDenominacion() + ".png");
+                            cartasBanca[1].setImagen("/resources/" + banca.getCarta2().getDenominacion()+ ".png");
+
+                            //analizar ShowDown
+                            analizarShowDown();
+                            this.update(this.getGraphics());
+                        }
+                    }
+                }
+            }
+            if(jugador.getDinero()<5)
+            {
+                sinCredito = true;
+            }
+            baraja.reset();
+        }
+        if(sinCredito)
+        {
+            JOptionPane.showMessageDialog(this,"Introduzca dinero para jugar" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        if(jugador.getDinero()-stack>=0)
+                {
+                    JOptionPane.showMessageDialog(this, "Ha ganado " + Math.abs((jugador.getDinero()-stack)) + "€\n" 
+                            +"\nGanadas " + Math.abs(ganadas -Integer.parseInt(tfGanados.getText()))
+                            +"\nPerdidas " + Math.abs((perdidas -Integer.parseInt(tfPerdidos.getText())))
+                            +"\nRetiradas " + Math.abs((retiradas -Integer.parseInt(tfRetiradas.getText())))
+                            +"\nEmpatadas " + Math.abs((empatadas -Integer.parseInt(tfEmpatadas.getText())))
+               , "Resumen", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                     JOptionPane.showMessageDialog(this, "Ha perdido " + Math.abs((jugador.getDinero()-stack)) + "€\n" 
+                            +"\nGanadas " + Math.abs(ganadas -Integer.parseInt(tfGanados.getText()))
+                            +"\nPerdidas " + Math.abs((perdidas -Integer.parseInt(tfPerdidos.getText())))
+                            +"\nRetiradas " + Math.abs((retiradas -Integer.parseInt(tfRetiradas.getText())))
+                            +"\nEmpatadas " + Math.abs((empatadas -Integer.parseInt(tfEmpatadas.getText())))
+               , "Resumen", JOptionPane.ERROR_MESSAGE);
+                }
         }
     }//GEN-LAST:event_btAutoActionPerformed
 
@@ -1390,6 +1631,7 @@ public class PokerCaribean extends javax.swing.JFrame {
     private javax.swing.JTextField tfResultado;
     private javax.swing.JTextField tfRetiradas;
     private javax.swing.JTextField tfTurn;
+    private javax.swing.JTextField tfsep;
     // End of variables declaration//GEN-END:variables
 
     public static PokerCaribean getInstance ()
